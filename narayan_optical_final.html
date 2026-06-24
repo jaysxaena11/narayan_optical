@@ -1,0 +1,2475 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title id="siteTabTitle">Narayan Optical & Optometry Clinic</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&family=Cinzel:wght@400;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ════════════════════════════════════════════════════
+       SECTION 1: CSS VARIABLES — LIGHT & DARK THEME
+    ════════════════════════════════════════════════════ */
+    :root {
+      /* ── Site Colors ── */
+      --green-dark:   #1b4332;
+      --green-mid:    #2d6a4f;
+      --green-light:  #40916c;
+      --gold:         #dda15e;
+      --gold-dark:    #bc6c25;
+      --cream:        #fefae0;
+      --cream-dark:   #f5f0c8;
+      --white:        #ffffff;
+      --text-dark:    #1a1a1a;
+      --text-muted:   #6c6c6c;
+      --shadow-soft:  0 8px 32px rgba(27,67,50,0.12);
+      --shadow-card:  0 4px 24px rgba(27,67,50,0.10);
+      --radius-card:  18px;
+      --radius-btn:   50px;
+      --transition:   0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      /* ── Site Theme Tokens (overridden in dark mode) ── */
+      --site-bg:       var(--cream);
+      --site-section-alt: var(--white);
+      --site-section-cream: var(--cream);
+      --site-text:     var(--text-dark);
+      --site-muted:    var(--text-muted);
+      /* ── Admin Panel Colors ── */
+      --admin-bg:     #0a1a10;
+      --admin-surface:#122019;
+      --admin-card:   #1a2e20;
+      --admin-border: rgba(221,161,94,0.14);
+      --admin-text:   #e8f5e9;
+      --admin-muted:  rgba(232,245,233,0.50);
+    }
+
+    /* ════════════════════════════════════════════════════
+       SECTION 2: DARK MODE OVERRIDES
+    ════════════════════════════════════════════════════ */
+    html[data-theme="dark"] {
+      --site-bg:            #0e1a12;
+      --site-section-alt:   #111e15;
+      --site-section-cream: #0a1410;
+      --site-text:          #e2ece6;
+      --site-muted:         #8aab96;
+      --cream:              #1a2e20;
+      --cream-dark:         #162818;
+      --white:              #111e15;
+      --text-dark:          #e2ece6;
+      --text-muted:         #8aab96;
+      --shadow-soft:        0 8px 32px rgba(0,0,0,0.40);
+      --shadow-card:        0 4px 24px rgba(0,0,0,0.30);
+    }
+    html[data-theme="dark"] body { background: var(--site-bg); color: var(--site-text); }
+    html[data-theme="dark"] #about        { background: var(--site-section-alt); }
+    html[data-theme="dark"] #products     { background: var(--site-section-alt); }
+    html[data-theme="dark"] #contact      { background: var(--site-section-alt); }
+    html[data-theme="dark"] #testimonials { background: var(--site-section-cream); }
+    html[data-theme="dark"] #services     { background: var(--site-section-cream); }
+    html[data-theme="dark"] .service-card { background: #1a2e20; }
+    html[data-theme="dark"] .test-card    { background: #1a2e20; }
+    html[data-theme="dark"] .contact-card { background: #1a2e20; }
+    html[data-theme="dark"] .product-card { background: #1a2e20; }
+    html[data-theme="dark"] .booking-form-card { background: #1a2e20; }
+    html[data-theme="dark"] .form-group input,
+    html[data-theme="dark"] .form-group select { background: #0e1a12; color: #e2ece6; border-color: rgba(221,161,94,0.20); }
+    html[data-theme="dark"] footer { background: #060f09; }
+    html[data-theme="dark"] .trust-icon { background: rgba(221,161,94,0.10); }
+
+    /* ════════════════════════════════════════════════════
+       SECTION 3: RESET & BASE
+    ════════════════════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--site-bg); color: var(--site-text); overflow-x: hidden; transition: background 0.4s ease, color 0.4s ease; }
+    img  { display: block; max-width: 100%; }
+    a    { text-decoration: none; color: inherit; }
+
+    /* ════════════════════════════════════════════════════
+       SECTION 4: OFFER BANNER
+    ════════════════════════════════════════════════════ */
+    .offer-banner {
+      background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-dark));
+      color: var(--green-dark); text-align: center;
+      padding: 10px 20px; font-size: 0.88rem; font-weight: 600;
+      letter-spacing: 0.05em; position: relative; z-index: 200;
+    }
+    .offer-banner span { margin: 0 14px; opacity: 0.5; }
+
+    /* ════════════════════════════════════════════════════
+       SECTION 5: NAVBAR
+    ════════════════════════════════════════════════════ */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(27,67,50,0.97);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      padding: 0 5%; display: flex; align-items: center;
+      justify-content: space-between; height: 68px;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.18);
+    }
+    .nav-logo { display: flex; align-items: center; gap: 11px; }
+    .nav-logo-icon {
+      width: 40px; height: 40px; background: var(--gold);
+      border-radius: 10px; display: flex; align-items: center;
+      justify-content: center; font-size: 1.3rem; overflow: hidden;
+      flex-shrink: 0;
+    }
+    .nav-logo-icon img { width: 100%; height: 100%; object-fit: cover; }
+    .nav-logo-text { font-family: 'Cinzel', serif; color: var(--cream); font-size: 1.0rem; line-height: 1.2; font-weight: 600; letter-spacing: 0.03em; }
+    .nav-logo-text small { display: block; font-family: 'DM Sans', sans-serif; font-size: 0.65rem; color: var(--gold); letter-spacing: 0.12em; font-weight: 400; text-transform: uppercase; }
+    .nav-links { display: flex; gap: 30px; list-style: none; }
+    .nav-links a { color: rgba(254,250,224,0.80); font-size: 0.88rem; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; transition: color var(--transition); position: relative; }
+    .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; right: 0; height: 2px; background: var(--gold); transform: scaleX(0); transition: transform var(--transition); transform-origin: left; }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-links a:hover::after { transform: scaleX(1); }
+    .nav-cta { background: var(--gold); color: var(--green-dark) !important; padding: 9px 22px; border-radius: var(--radius-btn); font-weight: 600 !important; font-size: 0.85rem !important; transition: background var(--transition), transform var(--transition) !important; }
+    .nav-cta:hover { background: #eab96e !important; transform: translateY(-1px); }
+    .nav-cta::after { display: none !important; }
+    .nav-right-group { display: flex; align-items: center; gap: 14px; }
+    .admin-trigger-btn { width: 36px; height: 36px; background: rgba(221,161,94,0.12); border: 1px solid rgba(221,161,94,0.30); border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background var(--transition), border-color var(--transition); flex-direction: column; gap: 4px; padding: 8px; }
+    .admin-trigger-btn:hover { background: rgba(221,161,94,0.22); border-color: var(--gold); }
+    .admin-trigger-btn span { display: block; width: 18px; height: 2px; background: var(--gold); border-radius: 2px; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 6px; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: var(--cream); border-radius: 2px; }
+    .mobile-nav { display: none; position: fixed; inset: 0; background: var(--green-dark); z-index: 99; flex-direction: column; align-items: center; justify-content: center; gap: 36px; }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a { color: var(--cream); font-size: 1.4rem; font-family: 'Playfair Display', serif; transition: color var(--transition); }
+    .mobile-nav a:hover { color: var(--gold); }
+    .mobile-nav .close-btn { position: absolute; top: 22px; right: 26px; font-size: 2rem; color: var(--gold); cursor: pointer; background: none; border: none; }
+
+    /* ════════════════════════════════════════════════════
+       SECTION 6: HERO SECTION
+    ════════════════════════════════════════════════════ */
+    #home { min-height: 92vh; background: linear-gradient(135deg, var(--green-dark) 0%, var(--green-mid) 55%, #1a3a2a 100%); display: grid; grid-template-columns: 1fr 1fr; align-items: center; padding: 60px 7%; position: relative; overflow: hidden; }
+    #home::before { content: ''; position: absolute; width: 520px; height: 520px; border-radius: 50%; border: 80px solid rgba(221,161,94,0.07); top: -100px; right: -80px; }
+    #home::after  { content: ''; position: absolute; width: 300px; height: 300px; border-radius: 50%; background: radial-gradient(circle, rgba(221,161,94,0.10) 0%, transparent 70%); bottom: 80px; left: 60px; }
+    .hero-content { position: relative; z-index: 2; }
+    .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(221,161,94,0.15); border: 1px solid rgba(221,161,94,0.35); color: var(--gold); padding: 7px 18px; border-radius: 50px; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.10em; text-transform: uppercase; margin-bottom: 24px; }
+    .hero-title { font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 5vw, 3.8rem); color: #fefae0; line-height: 1.18; margin-bottom: 10px; }
+    .hero-title em { color: var(--gold); font-style: italic; }
+    .hero-subtitle { font-family: 'Cinzel', serif; font-size: clamp(1rem, 2vw, 1.25rem); color: rgba(254,250,224,0.60); letter-spacing: 0.08em; margin-bottom: 22px; font-weight: 400; }
+    .hero-desc { color: rgba(254,250,224,0.72); font-size: 0.97rem; line-height: 1.75; max-width: 480px; margin-bottom: 38px; }
+    .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+    .btn-primary { background: linear-gradient(135deg, var(--gold), var(--gold-dark)); color: var(--green-dark); padding: 15px 36px; border-radius: var(--radius-btn); font-weight: 700; font-size: 0.95rem; border: none; cursor: pointer; transition: transform var(--transition), box-shadow var(--transition); box-shadow: 0 6px 24px rgba(221,161,94,0.35); }
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 36px rgba(221,161,94,0.50); }
+    .btn-outline { background: transparent; color: #fefae0; padding: 14px 32px; border-radius: var(--radius-btn); font-weight: 500; font-size: 0.95rem; border: 1.5px solid rgba(254,250,224,0.35); cursor: pointer; transition: border-color var(--transition), background var(--transition), transform var(--transition); }
+    .btn-outline:hover { border-color: var(--gold); background: rgba(221,161,94,0.08); transform: translateY(-3px); }
+    .hero-stats { display: flex; gap: 36px; margin-top: 48px; padding-top: 32px; border-top: 1px solid rgba(254,250,224,0.12); }
+    .stat-num { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--gold); font-weight: 700; line-height: 1; }
+    .stat-label { font-size: 0.75rem; color: rgba(254,250,224,0.55); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; }
+    .hero-visual { display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; z-index: 2; }
+    .eye-container { position: relative; display: flex; align-items: center; justify-content: center; }
+    .eye-ring { width: 320px; height: 320px; border-radius: 50%; border: 2px solid rgba(221,161,94,0.25); display: flex; align-items: center; justify-content: center; position: relative; animation: slowRotate 20s linear infinite; }
+    .eye-ring::before { content: ''; position: absolute; inset: 12px; border-radius: 50%; border: 1px dashed rgba(221,161,94,0.15); }
+    @keyframes slowRotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    .eye-svg-wrap { width: 220px; height: 220px; background: rgba(221,161,94,0.08); border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(221,161,94,0.20); }
+    .main-eye { animation: eyeBlink 4s ease-in-out infinite; }
+    @keyframes eyeBlink { 0%, 90%, 100% { transform: scaleY(1); } 95% { transform: scaleY(0.05); } }
+    .float-card { position: absolute; background: rgba(255,255,255,0.08); backdrop-filter: blur(14px); border: 1px solid rgba(221,161,94,0.25); border-radius: 14px; padding: 12px 18px; color: #fefae0; font-size: 0.78rem; white-space: nowrap; animation: floatAnim 3s ease-in-out infinite; }
+    .float-card:nth-child(2) { animation-delay: 0.8s; } .float-card:nth-child(3) { animation-delay: 1.6s; }
+    .float-card strong { color: var(--gold); font-size: 1.0rem; display: block; }
+    .fc-top { top: 20px; right: -20px; } .fc-left { bottom: 50px; left: -30px; } .fc-bottom { bottom: -10px; right: 20px; }
+    @keyframes floatAnim { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+
+    /* ════════════════════════════════════════════════════
+       SECTION 7: SHARED SECTION STYLES
+    ════════════════════════════════════════════════════ */
+    section { padding: 90px 7%; }
+    .section-tag { display: inline-flex; align-items: center; gap: 8px; color: var(--green-mid); font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 14px; }
+    .section-tag::before { content: ''; width: 28px; height: 2px; background: var(--gold); }
+    .section-title { font-family: 'Playfair Display', serif; font-size: clamp(1.9rem, 3.5vw, 2.8rem); color: var(--green-dark); line-height: 1.25; margin-bottom: 16px; }
+    .section-title em { color: var(--gold-dark); font-style: italic; }
+    .section-desc { color: var(--site-muted); font-size: 0.97rem; line-height: 1.75; max-width: 580px; }
+    html[data-theme="dark"] .section-title { color: #7ecfa0; }
+    html[data-theme="dark"] .section-tag   { color: #5bba8a; }
+    .fade-in { opacity: 0; transform: translateY(36px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+    .fade-in-delay-1 { transition-delay: 0.1s; } .fade-in-delay-2 { transition-delay: 0.2s; }
+    .fade-in-delay-3 { transition-delay: 0.3s; } .fade-in-delay-4 { transition-delay: 0.4s; }
+
+    /* ════════════════════════════════════════════════════
+       SECTION 8: ABOUT
+    ════════════════════════════════════════════════════ */
+    #about { background: var(--site-section-alt); display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; }
+    .about-visual { position: relative; }
+    .about-img-block { background: linear-gradient(135deg, var(--green-dark) 0%, var(--green-mid) 100%); border-radius: var(--radius-card); height: 440px; display: flex; align-items: center; justify-content: center; font-size: 7rem; position: relative; overflow: hidden; }
+    .about-img-block::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 40%; background: linear-gradient(to top, rgba(27,67,50,0.6), transparent); }
+    .about-badge-float { position: absolute; bottom: -20px; right: -20px; background: var(--gold); color: var(--green-dark); border-radius: var(--radius-card); padding: 20px 24px; font-weight: 700; box-shadow: var(--shadow-soft); text-align: center; }
+    .about-badge-float .num { font-family: 'Playfair Display', serif; font-size: 2.2rem; display: block; line-height: 1; }
+    .about-badge-float .lbl { font-size: 0.75rem; letter-spacing: 0.06em; }
+    .trust-list { list-style: none; margin-top: 28px; display: flex; flex-direction: column; gap: 16px; }
+    .trust-item { display: flex; align-items: flex-start; gap: 14px; }
+    .trust-icon { width: 38px; height: 38px; min-width: 38px; background: rgba(27,67,50,0.07); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; }
+    .trust-item h4 { font-size: 0.92rem; font-weight: 600; color: var(--green-dark); margin-bottom: 2px; }
+    .trust-item p  { font-size: 0.83rem; color: var(--site-muted); line-height: 1.5; }
+    html[data-theme="dark"] .trust-item h4 { color: #7ecfa0; }
+
+    /* ════════════════════════════════════════════════════
+       SECTION 9: SERVICES
+    ════════════════════════════════════════════════════ */
+    #services { background: var(--site-section-cream); }
+    .services-header { text-align: center; margin-bottom: 56px; }
+    .services-header .section-desc { margin: 0 auto; }
+    .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 28px; }
+    .service-card { background: var(--site-section-alt); border-radius: var(--radius-card); padding: 36px 28px; text-align: center; box-shadow: var(--shadow-card); transition: transform var(--transition), box-shadow var(--transition); position: relative; overflow: hidden; border: 1px solid transparent; }
+    .service-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--green-dark), var(--gold)); transform: scaleX(0); transform-origin: left; transition: transform var(--transition); }
+    .service-card:hover { transform: translateY(-8px); box-shadow: 0 20px 50px rgba(27,67,50,0.15); border-color: rgba(27,67,50,0.08); }
+    .service-card:hover::before { transform: scaleX(1); }
+    .service-icon { width: 72px; height: 72px; background: linear-gradient(135deg, rgba(27,67,50,0.08), rgba(27,67,50,0.04)); border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 2rem; margin: 0 auto 22px; transition: transform var(--transition); }
+    .service-card:hover .service-icon { transform: scale(1.12) rotate(-4deg); }
+    .service-card h3 { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--green-dark); margin-bottom: 10px; }
+    .service-card p  { font-size: 0.87rem; color: var(--site-muted); line-height: 1.65; }
+    html[data-theme="dark"] .service-card h3 { color: #7ecfa0; }
+
+    /* ════════════════════════════════════════════════════
+       SECTION 10: PRODUCTS
+    ════════════════════════════════════════════════════ */
+    #products { background: var(--site-section-alt); }
+    .products-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 48px; flex-wrap: wrap; gap: 16px; }
+    .products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 28px; }
+    .product-card { background: var(--site-section-cream); border-radius: var(--radius-card); overflow: hidden; box-shadow: var(--shadow-card); transition: transform var(--transition), box-shadow var(--transition); border: 1px solid rgba(27,67,50,0.06); }
+    .product-card:hover { transform: translateY(-6px) scale(1.01); box-shadow: 0 16px 48px rgba(27,67,50,0.14); }
+    .product-thumb { height: 200px; background: linear-gradient(135deg, var(--green-dark), var(--green-mid)); display: flex; align-items: center; justify-content: center; font-size: 5rem; position: relative; overflow: hidden; transition: transform var(--transition); }
+    .product-thumb img { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; }
+    .product-thumb .thumb-emoji { position: relative; z-index: 1; }
+    .product-card:hover .product-thumb { transform: scale(1.05); }
+    .product-tag { position: absolute; top: 14px; left: 14px; background: var(--gold); color: var(--green-dark); font-size: 0.70rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 4px 12px; border-radius: 50px; z-index: 2; }
+    .product-info { padding: 22px 24px; }
+    .product-info h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--green-dark); margin-bottom: 6px; }
+    .product-info p  { font-size: 0.83rem; color: var(--site-muted); line-height: 1.6; margin-bottom: 16px; }
+    .product-cta { display: inline-flex; align-items: center; gap: 6px; color: var(--green-mid); font-size: 0.85rem; font-weight: 600; transition: gap var(--transition), color var(--transition); cursor: pointer; }
+    .product-cta:hover { gap: 10px; color: var(--gold-dark); }
+    html[data-theme="dark"] .product-info h3 { color: #7ecfa0; }
+
+    /* ════════════════════════════════════════════════════
+       SECTION 11: APPOINTMENT BOOKING
+    ════════════════════════════════════════════════════ */
+    #appointment { background: linear-gradient(135deg, var(--green-dark) 0%, #16382a 100%); position: relative; overflow: hidden; }
+    #appointment::before { content: ''; position: absolute; width: 600px; height: 600px; border-radius: 50%; border: 80px solid rgba(221,161,94,0.06); top: -200px; right: -200px; }
+    .appt-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; position: relative; z-index: 2; }
+    .appt-info .section-title { color: #fefae0; }
+    .appt-info .section-desc  { color: rgba(254,250,224,0.65); }
+    .appt-features { margin-top: 32px; display: flex; flex-direction: column; gap: 18px; }
+    .appt-feat { display: flex; align-items: center; gap: 14px; color: rgba(254,250,224,0.80); font-size: 0.90rem; }
+    .appt-feat-icon { width: 36px; height: 36px; min-width: 36px; background: rgba(221,161,94,0.15); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.0rem; }
+    .booking-form-card { background: var(--site-section-alt); border-radius: 24px; padding: 44px 40px; box-shadow: 0 24px 60px rgba(0,0,0,0.25); }
+    .booking-form-card h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--green-dark); margin-bottom: 6px; }
+    .booking-form-card p  { color: var(--site-muted); font-size: 0.85rem; margin-bottom: 28px; }
+    html[data-theme="dark"] .booking-form-card h3 { color: #7ecfa0; }
+    .form-group { margin-bottom: 18px; }
+    .form-group label { display: block; font-size: 0.82rem; font-weight: 600; color: var(--green-dark); letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 8px; }
+    html[data-theme="dark"] .form-group label { color: #7ecfa0; }
+    .form-group input, .form-group select { width: 100%; padding: 13px 18px; border: 1.5px solid #e2e8e0; border-radius: 12px; font-family: 'DM Sans', sans-serif; font-size: 0.93rem; color: var(--site-text); background: var(--site-section-cream); transition: border-color var(--transition), box-shadow var(--transition); outline: none; }
+    .form-group input:focus, .form-group select:focus { border-color: var(--green-mid); box-shadow: 0 0 0 3px rgba(45,106,79,0.10); }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .btn-book { width: 100%; background: linear-gradient(135deg, var(--green-dark), var(--green-mid)); color: #fff; padding: 15px; border-radius: 12px; font-family: 'DM Sans', sans-serif; font-size: 1.0rem; font-weight: 600; border: none; cursor: pointer; transition: transform var(--transition), box-shadow var(--transition); margin-top: 8px; }
+    .btn-book:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(27,67,50,0.35); }
+    .form-success { display: none; text-align: center; padding: 20px; }
+    .form-success .check { font-size: 3rem; margin-bottom: 12px; }
+    .form-success h4 { font-family: 'Playfair Display', serif; color: var(--green-dark); font-size: 1.3rem; margin-bottom: 8px; }
+    .form-success p { color: var(--site-muted); font-size: 0.87rem; }
+
+    /* ════════════════════════════════════════════════════
+       SECTION 12: TESTIMONIALS
+    ════════════════════════════════════════════════════ */
+    #testimonials { background: var(--site-section-cream); }
+    .test-header { text-align: center; margin-bottom: 52px; }
+    .test-header .section-desc { margin: 0 auto; }
+    .test-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 28px; }
+    .test-card { background: var(--site-section-alt); border-radius: var(--radius-card); padding: 34px 30px; box-shadow: var(--shadow-card); transition: transform var(--transition); border: 1px solid rgba(27,67,50,0.05); }
+    .test-card:hover { transform: translateY(-5px); }
+    .test-quote { font-size: 3.5rem; color: var(--gold); font-family: 'Playfair Display', serif; line-height: 0.7; margin-bottom: 18px; opacity: 0.6; }
+    .test-text  { color: var(--site-muted); font-size: 0.92rem; line-height: 1.72; margin-bottom: 24px; font-style: italic; }
+    .test-author { display: flex; align-items: center; gap: 14px; }
+    .test-avatar { width: 46px; height: 46px; border-radius: 50%; background: linear-gradient(135deg, var(--green-dark), var(--green-mid)); display: flex; align-items: center; justify-content: center; color: var(--gold); font-weight: 700; font-size: 1.1rem; font-family: 'Playfair Display', serif; }
+    .test-name  { font-weight: 600; font-size: 0.93rem; color: var(--green-dark); }
+    .test-stars { color: var(--gold); font-size: 0.8rem; margin-top: 2px; }
+    html[data-theme="dark"] .test-name { color: #7ecfa0; }
+
+    /* ════════════════════════════════════════════════════
+       SECTION 13: CONTACT
+    ════════════════════════════════════════════════════ */
+    #contact { background: var(--site-section-alt); display: grid; grid-template-columns: 1fr 1.2fr; gap: 60px; align-items: start; }
+    .contact-card { display: flex; align-items: flex-start; gap: 16px; padding: 22px; border-radius: 14px; background: var(--site-section-cream); margin-bottom: 16px; border: 1px solid rgba(27,67,50,0.06); transition: transform var(--transition), box-shadow var(--transition); }
+    .contact-card:hover { transform: translateX(4px); box-shadow: var(--shadow-card); }
+    .contact-icon { width: 44px; height: 44px; min-width: 44px; background: var(--green-dark); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.15rem; }
+    .contact-card h4 { font-size: 0.80rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--site-muted); margin-bottom: 4px; }
+    .contact-card p, .contact-card a { font-size: 0.93rem; color: var(--green-dark); font-weight: 500; line-height: 1.55; }
+    html[data-theme="dark"] .contact-card a,
+    html[data-theme="dark"] .contact-card p { color: #7ecfa0; }
+    .contact-card a:hover { color: var(--gold-dark); }
+    .contact-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 28px; }
+    .btn-call { display: inline-flex; align-items: center; gap: 8px; background: var(--green-dark); color: #fff; padding: 13px 26px; border-radius: var(--radius-btn); font-weight: 600; font-size: 0.90rem; transition: transform var(--transition), box-shadow var(--transition); }
+    .btn-call:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(27,67,50,0.30); }
+    .btn-whatsapp { display: inline-flex; align-items: center; gap: 8px; background: #25D366; color: #fff; padding: 13px 26px; border-radius: var(--radius-btn); font-weight: 600; font-size: 0.90rem; transition: transform var(--transition), box-shadow var(--transition); }
+    .btn-whatsapp:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(37,211,102,0.35); }
+    .map-container { border-radius: var(--radius-card); overflow: hidden; box-shadow: var(--shadow-soft); border: 1px solid rgba(27,67,50,0.08); }
+    .map-container iframe { width: 100%; height: 400px; border: none; display: block; }
+
+    /* ════════════════════════════════════════════════════
+       SECTION 14: FOOTER
+    ════════════════════════════════════════════════════ */
+    footer { background: var(--green-dark); color: #fefae0; padding: 52px 7% 28px; }
+    .footer-top { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 48px; margin-bottom: 42px; padding-bottom: 40px; border-bottom: 1px solid rgba(254,250,224,0.10); }
+    .footer-brand p { color: rgba(254,250,224,0.55); font-size: 0.87rem; line-height: 1.70; margin-top: 16px; max-width: 300px; }
+    .footer-col h5 { font-family: 'Cinzel', serif; font-size: 0.80rem; letter-spacing: 0.10em; color: var(--gold); text-transform: uppercase; margin-bottom: 18px; }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-links a { color: rgba(254,250,224,0.60); font-size: 0.87rem; transition: color var(--transition), padding-left var(--transition); }
+    .footer-links a:hover { color: var(--gold); padding-left: 4px; }
+    .footer-hours { color: rgba(254,250,224,0.60); font-size: 0.87rem; line-height: 2.0; }
+    .footer-bottom { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+    .footer-bottom p { color: rgba(254,250,224,0.40); font-size: 0.78rem; }
+
+    /* ════════════════════════════════════════════════════
+       SECTION 15: FLOATING BUTTONS
+    ════════════════════════════════════════════════════ */
+    .float-wa { position: fixed; bottom: 28px; right: 28px; width: 58px; height: 58px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 6px 24px rgba(37,211,102,0.45); z-index: 500; font-size: 1.65rem; transition: transform var(--transition); cursor: pointer; }
+    .float-wa:hover { transform: scale(1.12) rotate(8deg); }
+    .float-wa::before { content: ''; position: absolute; inset: -6px; border-radius: 50%; border: 2px solid rgba(37,211,102,0.4); animation: pulse 2s ease-out infinite; }
+    @keyframes pulse { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(1.6); opacity: 0; } }
+    .scroll-top { position: fixed; bottom: 100px; right: 30px; width: 42px; height: 42px; background: var(--green-dark); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--gold); font-size: 1.1rem; cursor: pointer; z-index: 500; opacity: 0; transform: translateY(10px); transition: opacity var(--transition), transform var(--transition); border: 1.5px solid rgba(221,161,94,0.30); }
+    .scroll-top.show { opacity: 1; transform: translateY(0); }
+
+    /* ════════════════════════════════════════════════════
+       SECTION 16: RESPONSIVE
+    ════════════════════════════════════════════════════ */
+    @media (max-width: 1024px) {
+      #home { grid-template-columns: 1fr; text-align: center; }
+      .hero-desc { margin: 0 auto 38px; } .hero-actions { justify-content: center; } .hero-stats { justify-content: center; } .hero-visual { margin-top: 48px; }
+      #about { grid-template-columns: 1fr; gap: 48px; } .about-img-block { height: 320px; }
+      .appt-wrapper { grid-template-columns: 1fr; gap: 48px; }
+      #contact { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 768px) {
+      nav { padding: 0 5%; } .nav-links { display: none; } .hamburger { display: flex; }
+      section { padding: 60px 5%; } #home { padding: 50px 5%; }
+      .eye-ring { width: 240px; height: 240px; } .eye-svg-wrap { width: 170px; height: 170px; }
+      .form-row { grid-template-columns: 1fr; } .booking-form-card { padding: 30px 22px; }
+      .footer-top { grid-template-columns: 1fr; gap: 28px; } .footer-bottom { flex-direction: column; text-align: center; }
+      .about-badge-float { right: 0; bottom: -30px; }
+    }
+    @media (max-width: 480px) {
+      .hero-stats { flex-direction: column; gap: 20px; } .contact-actions { flex-direction: column; }
+      .btn-call, .btn-whatsapp { justify-content: center; }
+    }
+
+    /* ════════════════════════════════════════════════════════════════
+       SECTION 17: TOAST NOTIFICATIONS
+    ════════════════════════════════════════════════════════════════ */
+    .toast-container { position: fixed; top: 24px; right: 24px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; pointer-events: none; }
+    .toast { display: flex; align-items: center; gap: 12px; padding: 14px 20px; border-radius: 12px; font-size: 0.88rem; font-weight: 500; box-shadow: 0 8px 32px rgba(0,0,0,0.25); pointer-events: auto; animation: toastSlide 0.4s cubic-bezier(0.34,1.56,0.64,1) forwards; max-width: 360px; }
+    .toast.success { background: #1b4332; color: #d1fae5; border-left: 4px solid #40916c; }
+    .toast.error   { background: #3b0f0f; color: #fecaca; border-left: 4px solid #ef4444; }
+    .toast.info    { background: #1e2f3a; color: #bae6fd; border-left: 4px solid #38bdf8; }
+    .toast.warn    { background: #2d1f00; color: #fde68a; border-left: 4px solid #f59e0b; }
+    .toast .t-icon { font-size: 1.1rem; }
+    .toast.hide    { animation: toastHide 0.3s ease forwards; }
+    @keyframes toastSlide { from { opacity: 0; transform: translateX(60px); } to   { opacity: 1; transform: translateX(0); } }
+    @keyframes toastHide  { from { opacity: 1; transform: translateX(0); } to   { opacity: 0; transform: translateX(60px); } }
+
+    /* ════════════════════════════════════════════════════════════════
+       SECTION 18: ADMIN LOGIN MODAL
+    ════════════════════════════════════════════════════════════════ */
+    .admin-modal-overlay { display: none; position: fixed; inset: 0; background: rgba(5,12,8,0.92); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); z-index: 2000; align-items: center; justify-content: center; }
+    .admin-modal-overlay.open { display: flex; }
+    .admin-login-box { background: var(--admin-surface); border: 1px solid var(--admin-border); border-radius: 24px; padding: 48px 44px; width: 100%; max-width: 420px; box-shadow: 0 40px 100px rgba(0,0,0,0.6); animation: loginPop 0.4s cubic-bezier(0.34,1.56,0.64,1); position: relative; }
+    @keyframes loginPop { from { opacity: 0; transform: scale(0.88) translateY(24px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+    .login-logo { text-align: center; margin-bottom: 32px; }
+    .login-logo .l-icon { width: 68px; height: 68px; background: linear-gradient(135deg, var(--gold-dark), var(--gold)); border-radius: 18px; display: inline-flex; align-items: center; justify-content: center; font-size: 1.9rem; margin-bottom: 14px; box-shadow: 0 8px 24px rgba(221,161,94,0.35); overflow: hidden; }
+    .login-logo .l-icon img { width: 100%; height: 100%; object-fit: cover; }
+    .login-logo h2 { font-family: 'Playfair Display', serif; color: var(--admin-text); font-size: 1.5rem; margin-bottom: 4px; }
+    .login-logo p  { color: var(--admin-muted); font-size: 0.82rem; }
+    .admin-field { margin-bottom: 18px; }
+    .admin-field label { display: block; color: var(--gold); font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.10em; margin-bottom: 8px; }
+    .admin-field input { width: 100%; padding: 13px 16px; background: var(--admin-card); border: 1.5px solid var(--admin-border); border-radius: 10px; color: var(--admin-text); font-family: 'DM Sans', sans-serif; font-size: 0.93rem; outline: none; transition: border-color var(--transition), box-shadow var(--transition); }
+    .admin-field input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(221,161,94,0.15); }
+    .admin-field input::placeholder { color: var(--admin-muted); }
+    .login-error { background: rgba(239,68,68,0.12); border: 1px solid rgba(239,68,68,0.30); color: #fca5a5; border-radius: 8px; padding: 10px 14px; font-size: 0.83rem; margin-bottom: 16px; display: none; }
+    .login-error.show { display: block; }
+    .btn-admin-login { width: 100%; padding: 14px; background: linear-gradient(135deg, var(--gold-dark), var(--gold)); color: var(--green-dark); border: none; border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: 1.0rem; font-weight: 700; cursor: pointer; transition: transform var(--transition), box-shadow var(--transition); margin-top: 8px; }
+    .btn-admin-login:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(221,161,94,0.40); }
+    .modal-close { position: absolute; top: 18px; right: 22px; color: var(--admin-muted); font-size: 1.6rem; cursor: pointer; background: none; border: none; line-height: 1; transition: color var(--transition); }
+    .modal-close:hover { color: var(--gold); }
+
+    /* ════════════════════════════════════════════════════════════════
+       SECTION 19: ADMIN DASHBOARD — LAYOUT
+    ════════════════════════════════════════════════════════════════ */
+    .admin-dashboard { display: none; position: fixed; inset: 0; background: var(--admin-bg); z-index: 3000; overflow: hidden; }
+    .admin-dashboard.open { display: flex; flex-direction: column; }
+
+    /* Top Bar */
+    .admin-topbar { height: 62px; background: var(--admin-surface); border-bottom: 1px solid var(--admin-border); display: flex; align-items: center; justify-content: space-between; padding: 0 24px; flex-shrink: 0; }
+    .admin-topbar-left { display: flex; align-items: center; gap: 14px; }
+    .admin-brand { font-family: 'Cinzel', serif; color: var(--gold); font-size: 0.95rem; letter-spacing: 0.04em; }
+    .admin-brand small { display: block; font-family: 'DM Sans', sans-serif; font-size: 0.63rem; color: var(--admin-muted); text-transform: uppercase; letter-spacing: 0.10em; font-weight: 400; margin-top: 1px; }
+    .admin-topbar-right { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .atb-btn { display: flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: 8px; font-size: 0.80rem; font-weight: 600; cursor: pointer; border: none; transition: all var(--transition); white-space: nowrap; }
+    .atb-site  { background: rgba(221,161,94,0.10); color: var(--gold);   border: 1px solid var(--admin-border); }
+    .atb-site:hover  { background: rgba(221,161,94,0.20); }
+    .atb-logout{ background: rgba(239,68,68,0.08); color: #f87171; border: 1px solid rgba(239,68,68,0.18); }
+    .atb-logout:hover{ background: rgba(239,68,68,0.18); }
+    .atb-theme { background: rgba(255,255,255,0.06); color: var(--admin-text); border: 1px solid var(--admin-border); font-size: 1.1rem; padding: 7px 12px; }
+    .atb-theme:hover { background: rgba(255,255,255,0.12); }
+
+    /* Sidebar */
+    .admin-body { display: flex; flex: 1; overflow: hidden; }
+    .admin-sidebar { width: 228px; background: var(--admin-surface); border-right: 1px solid var(--admin-border); padding: 16px 0; flex-shrink: 0; overflow-y: auto; }
+    .sidebar-section { margin-bottom: 4px; }
+    .sidebar-label { color: var(--admin-muted); font-size: 0.66rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; padding: 4px 18px 8px; }
+    .sidebar-item { display: flex; align-items: center; gap: 10px; padding: 10px 18px; color: var(--admin-muted); font-size: 0.86rem; font-weight: 500; cursor: pointer; transition: all var(--transition); border-left: 3px solid transparent; }
+    .sidebar-item:hover  { background: rgba(221,161,94,0.06); color: var(--admin-text); }
+    .sidebar-item.active { background: rgba(221,161,94,0.10); color: var(--gold); border-left-color: var(--gold); }
+    .sidebar-item .s-icon { font-size: 1.0rem; width: 20px; text-align: center; }
+    .sidebar-badge { margin-left: auto; background: var(--gold-dark); color: #fff; font-size: 0.66rem; padding: 2px 8px; border-radius: 50px; font-weight: 700; }
+
+    /* Content Area */
+    .admin-content { flex: 1; overflow-y: auto; padding: 26px 30px; }
+    .admin-panel { display: none; }
+    .admin-panel.active { display: block; animation: panelIn 0.3s ease; }
+    @keyframes panelIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    .panel-header { margin-bottom: 26px; }
+    .panel-header h2 { font-family: 'Playfair Display', serif; color: var(--admin-text); font-size: 1.55rem; margin-bottom: 4px; }
+    .panel-header p  { color: var(--admin-muted); font-size: 0.84rem; }
+
+    /* Stats Row */
+    .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(155px, 1fr)); gap: 16px; margin-bottom: 24px; }
+    .stat-card { background: var(--admin-card); border: 1px solid var(--admin-border); border-radius: 14px; padding: 20px 18px; transition: transform var(--transition); cursor: default; }
+    .stat-card:hover { transform: translateY(-3px); }
+    .stat-card .s-ico { font-size: 1.4rem; margin-bottom: 10px; }
+    .stat-card .s-val { font-family: 'Playfair Display', serif; font-size: 1.9rem; color: var(--gold); font-weight: 700; line-height: 1; }
+    .stat-card .s-lbl { font-size: 0.74rem; color: var(--admin-muted); margin-top: 5px; text-transform: uppercase; letter-spacing: 0.06em; }
+
+    /* Admin Cards */
+    .admin-card { background: var(--admin-card); border: 1px solid var(--admin-border); border-radius: 16px; padding: 22px 24px; margin-bottom: 20px; }
+    .admin-card h3 { color: var(--admin-text); font-size: 0.98rem; font-weight: 600; margin-bottom: 18px; display: flex; align-items: center; gap: 8px; }
+    .admin-card h3 > span:first-child { color: var(--gold); }
+
+    /* Form Elements */
+    .af-group { margin-bottom: 15px; }
+    .af-group label { display: block; color: var(--gold); font-size: 0.73rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 7px; }
+    .af-group input, .af-group textarea, .af-group select {
+      width: 100%; padding: 10px 13px; background: var(--admin-surface);
+      border: 1.5px solid var(--admin-border); border-radius: 9px; color: var(--admin-text);
+      font-family: 'DM Sans', sans-serif; font-size: 0.87rem; outline: none; resize: vertical;
+      transition: border-color var(--transition), box-shadow var(--transition);
+    }
+    .af-group input:focus, .af-group textarea:focus, .af-group select:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(221,161,94,0.12); }
+    .af-group input::placeholder, .af-group textarea::placeholder { color: var(--admin-muted); }
+    .af-group select option { background: var(--admin-card); color: var(--admin-text); }
+    .af-row { display: grid; grid-template-columns: 1fr 1fr; gap: 13px; }
+    .af-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 13px; }
+    .af-hint { font-size: 0.74rem; color: var(--admin-muted); margin-top: 5px; }
+
+    /* Buttons */
+    .abt-primary { display: inline-flex; align-items: center; gap: 7px; padding: 10px 20px; background: linear-gradient(135deg, var(--gold-dark), var(--gold)); color: var(--green-dark); border: none; border-radius: 9px; font-family: 'DM Sans', sans-serif; font-size: 0.86rem; font-weight: 700; cursor: pointer; transition: all var(--transition); }
+    .abt-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(221,161,94,0.35); }
+    .abt-danger  { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; background: rgba(239,68,68,0.10); color: #f87171; border: 1px solid rgba(239,68,68,0.22); border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 0.80rem; font-weight: 600; cursor: pointer; transition: all var(--transition); }
+    .abt-danger:hover  { background: rgba(239,68,68,0.20); }
+    .abt-edit    { display: inline-flex; align-items: center; gap: 6px; padding: 8px 13px; background: rgba(221,161,94,0.09); color: var(--gold); border: 1px solid rgba(221,161,94,0.22); border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 0.80rem; font-weight: 600; cursor: pointer; transition: all var(--transition); }
+    .abt-edit:hover    { background: rgba(221,161,94,0.18); }
+    .abt-save    { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; background: rgba(64,145,108,0.15); color: #6ee7b7; border: 1px solid rgba(64,145,108,0.30); border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 0.86rem; font-weight: 600; cursor: pointer; transition: all var(--transition); }
+    .abt-save:hover    { background: rgba(64,145,108,0.28); }
+    .abt-warn    { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; background: rgba(245,158,11,0.10); color: #fcd34d; border: 1px solid rgba(245,158,11,0.22); border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 0.86rem; font-weight: 600; cursor: pointer; transition: all var(--transition); }
+    .abt-warn:hover    { background: rgba(245,158,11,0.20); }
+
+    /* Tables */
+    .admin-table-wrap { overflow-x: auto; border-radius: 10px; }
+    .admin-table { width: 100%; border-collapse: collapse; font-size: 0.84rem; }
+    .admin-table th { background: rgba(221,161,94,0.08); color: var(--gold); font-size: 0.70rem; text-transform: uppercase; letter-spacing: 0.08em; padding: 11px 14px; text-align: left; font-weight: 600; border-bottom: 1px solid var(--admin-border); white-space: nowrap; }
+    .admin-table td { padding: 12px 14px; color: var(--admin-text); border-bottom: 1px solid rgba(221,161,94,0.07); vertical-align: middle; }
+    .admin-table tr:last-child td { border-bottom: none; }
+    .admin-table tr:hover td { background: rgba(221,161,94,0.04); }
+    .admin-table .actions-cell { display: flex; gap: 7px; }
+    .td-badge { display: inline-block; background: rgba(221,161,94,0.14); color: var(--gold); font-size: 0.70rem; font-weight: 600; padding: 3px 10px; border-radius: 50px; white-space: nowrap; }
+    .td-empty { text-align: center; padding: 36px; color: var(--admin-muted); font-style: italic; }
+
+    /* Image Upload Preview */
+    .img-preview { width: 100%; height: 140px; border-radius: 10px; border: 2px dashed var(--admin-border); display: flex; align-items: center; justify-content: center; margin-top: 10px; overflow: hidden; background: var(--admin-surface); color: var(--admin-muted); font-size: 0.80rem; flex-direction: column; gap: 8px; cursor: pointer; transition: border-color var(--transition), background var(--transition); }
+    .img-preview:hover { border-color: var(--gold); background: rgba(221,161,94,0.04); }
+    .img-preview img { width: 100%; height: 100%; object-fit: cover; }
+    .img-preview .preview-icon { font-size: 1.8rem; }
+    .logo-preview-sm { width: 80px; height: 80px; border-radius: 14px; border: 2px dashed var(--admin-border); display: flex; align-items: center; justify-content: center; overflow: hidden; background: var(--admin-surface); font-size: 2rem; cursor: pointer; flex-shrink: 0; transition: border-color var(--transition); }
+    .logo-preview-sm:hover { border-color: var(--gold); }
+    .logo-preview-sm img { width: 100%; height: 100%; object-fit: cover; }
+
+    /* Product & Service Admin Lists */
+    .admin-product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 14px; margin-top: 4px; }
+    .admin-product-item { background: var(--admin-surface); border: 1px solid var(--admin-border); border-radius: 12px; overflow: hidden; transition: transform var(--transition); }
+    .admin-product-item:hover { transform: translateY(-3px); }
+    .api-thumb { height: 110px; background: linear-gradient(135deg, var(--green-dark), var(--green-mid)); display: flex; align-items: center; justify-content: center; font-size: 2.2rem; position: relative; overflow: hidden; }
+    .api-thumb img { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; }
+    .api-thumb .api-emoji { position: relative; z-index: 1; }
+    .api-info { padding: 10px 12px 4px; }
+    .api-info h4 { color: var(--admin-text); font-size: 0.85rem; font-weight: 600; margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .api-info .api-tag { color: var(--gold); font-size: 0.70rem; }
+    .api-actions { padding: 0 12px 12px; display: flex; gap: 7px; }
+    .service-admin-item { display: flex; align-items: center; gap: 12px; padding: 12px 14px; background: var(--admin-surface); border: 1px solid var(--admin-border); border-radius: 10px; margin-bottom: 9px; transition: transform var(--transition); }
+    .service-admin-item:hover { transform: translateX(4px); }
+    .sai-icon-wrap { width: 38px; height: 38px; min-width: 38px; background: rgba(221,161,94,0.08); border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 1.15rem; }
+    .sai-info { flex: 1; overflow: hidden; }
+    .sai-info h4 { color: var(--admin-text); font-size: 0.86rem; font-weight: 600; }
+    .sai-info p  { color: var(--admin-muted); font-size: 0.76rem; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .sai-actions { display: flex; gap: 7px; flex-shrink: 0; }
+
+    /* Gallery Grid */
+    .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px; }
+    .gallery-item { position: relative; border-radius: 10px; overflow: hidden; aspect-ratio: 1; border: 1px solid var(--admin-border); }
+    .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
+    .gallery-del { position: absolute; top: 5px; right: 5px; background: rgba(239,68,68,0.85); color: #fff; border: none; border-radius: 50%; width: 22px; height: 22px; font-size: 0.70rem; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+
+    /* Map Preview */
+    .map-preview-box { border-radius: 12px; overflow: hidden; border: 1px solid var(--admin-border); margin-top: 12px; }
+    .map-preview-box iframe { width: 100%; height: 260px; border: none; display: block; }
+
+    /* Settings section */
+    .settings-row { display: flex; align-items: center; justify-content: space-between; padding: 14px 18px; background: var(--admin-surface); border-radius: 10px; margin-bottom: 10px; border: 1px solid var(--admin-border); }
+    .settings-row .sr-info h4 { color: var(--admin-text); font-size: 0.90rem; font-weight: 600; }
+    .settings-row .sr-info p  { color: var(--admin-muted); font-size: 0.78rem; margin-top: 2px; }
+    .toggle-switch { position: relative; width: 48px; height: 26px; }
+    .toggle-switch input { opacity: 0; width: 0; height: 0; }
+    .toggle-slider { position: absolute; cursor: pointer; inset: 0; background: rgba(255,255,255,0.12); border-radius: 26px; transition: 0.3s; }
+    .toggle-slider::before { content: ''; position: absolute; height: 20px; width: 20px; left: 3px; bottom: 3px; background: #fff; border-radius: 50%; transition: 0.3s; }
+    .toggle-switch input:checked + .toggle-slider { background: var(--gold-dark); }
+    .toggle-switch input:checked + .toggle-slider::before { transform: translateX(22px); }
+
+    /* Live preview side panel */
+    .preview-split { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .preview-panel { background: var(--admin-surface); border: 1px solid var(--admin-border); border-radius: 10px; padding: 14px; font-size: 0.82rem; }
+    .preview-panel-label { color: var(--gold); font-size: 0.70rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.10em; margin-bottom: 10px; }
+    .preview-text-large { font-family: 'Playfair Display', serif; color: var(--admin-text); font-size: 1.3rem; font-weight: 700; line-height: 1.3; }
+    .preview-text-sub   { color: var(--admin-muted); font-size: 0.80rem; margin-top: 6px; line-height: 1.5; }
+
+    /* Confirm overlay */
+    .confirm-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.65); backdrop-filter: blur(3px); z-index: 9998; align-items: center; justify-content: center; }
+    .confirm-overlay.open { display: flex; }
+    .confirm-box { background: var(--admin-card); border: 1px solid var(--admin-border); border-radius: 16px; padding: 32px 28px; max-width: 380px; width: 90%; text-align: center; animation: loginPop 0.3s ease; }
+    .confirm-box .c-icon { font-size: 2.5rem; margin-bottom: 14px; }
+    .confirm-box h3 { color: var(--admin-text); font-size: 1.1rem; margin-bottom: 8px; }
+    .confirm-box p  { color: var(--admin-muted); font-size: 0.84rem; margin-bottom: 24px; }
+    .confirm-btns { display: flex; gap: 12px; justify-content: center; }
+
+    /* Edit modals */
+    .edit-modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75); backdrop-filter: blur(4px); z-index: 8000; align-items: center; justify-content: center; }
+    .edit-modal-overlay.open { display: flex; }
+    .edit-modal-box { background: var(--admin-card); border: 1px solid var(--admin-border); border-radius: 18px; padding: 30px 26px; width: 100%; max-width: 520px; max-height: 90vh; overflow-y: auto; animation: loginPop 0.3s ease; }
+    .edit-modal-box h3 { color: var(--gold); font-family: 'Playfair Display', serif; font-size: 1.18rem; margin-bottom: 18px; display: flex; align-items: center; gap: 10px; }
+    .modal-footer { display: flex; gap: 12px; justify-content: flex-end; margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--admin-border); }
+
+    /* Scrollbars */
+    .admin-content::-webkit-scrollbar, .admin-sidebar::-webkit-scrollbar { width: 5px; }
+    .admin-content::-webkit-scrollbar-track, .admin-sidebar::-webkit-scrollbar-track { background: transparent; }
+    .admin-content::-webkit-scrollbar-thumb, .admin-sidebar::-webkit-scrollbar-thumb { background: rgba(221,161,94,0.22); border-radius: 10px; }
+
+    /* Mobile Admin */
+    @media (max-width: 768px) {
+      .admin-sidebar { width: 195px; } .admin-content { padding: 16px; }
+      .stats-row { grid-template-columns: 1fr 1fr; } .af-row { grid-template-columns: 1fr; }
+      .af-row-3 { grid-template-columns: 1fr 1fr; } .preview-split { grid-template-columns: 1fr; }
+      .admin-login-box { padding: 30px 22px; margin: 16px; }
+    }
+    @media (max-width: 540px) {
+      .admin-sidebar { position: absolute; left: -200px; z-index: 10; height: calc(100% - 62px); transition: left var(--transition); top: 62px; }
+      .admin-sidebar.mob-open { left: 0; box-shadow: 8px 0 32px rgba(0,0,0,0.4); }
+      .admin-body { position: relative; }
+      .atb-btn span:not(.s-icon) { display: none; }
+    }
+
+    /* Color badge for creds */
+    .cred-chip { display: inline-block; background: rgba(221,161,94,0.12); color: var(--gold); border: 1px solid rgba(221,161,94,0.25); border-radius: 6px; padding: 4px 10px; font-size: 0.78rem; font-family: monospace; letter-spacing: 0.04em; }
+
+    /* ── Shop Status Badge ── */
+    .shop-status-badge { display: inline-flex; align-items: center; gap: 8px; padding: 8px 18px; border-radius: 50px; font-size: 0.82rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; margin-top: 10px; }
+    .shop-status-badge.open   { background: rgba(34,197,94,0.12);  color: #16a34a; border: 1px solid rgba(34,197,94,0.30); }
+    .shop-status-badge.closed { background: rgba(239,68,68,0.10);  color: #dc2626; border: 1px solid rgba(239,68,68,0.28); }
+    .shop-status-badge .dot   { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .shop-status-badge.open   .dot { background: #22c55e; animation: dotPulse 1.6s ease-in-out infinite; }
+    .shop-status-badge.closed .dot { background: #ef4444; }
+    @keyframes dotPulse { 0%,100% { opacity:1; } 50% { opacity:0.3; } }
+    html[data-theme="dark"] .shop-status-badge.open   { color: #4ade80; background: rgba(74,222,128,0.10); }
+    html[data-theme="dark"] .shop-status-badge.closed { color: #f87171; background: rgba(248,113,113,0.10); }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════
+       TOAST CONTAINER
+  ═══════════════════════════════════════════ -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- ═══════════════════════════════════════════
+       OFFER BANNER
+  ═══════════════════════════════════════════ -->
+  <div class="offer-banner" id="offerBanner">
+    🎉 Free Eye Checkup for New Patients
+    <span>|</span>
+    ✨ Premium Frames Starting at ₹499
+    <span>|</span>
+    📞 Call Now: +91-XXXXXXXXXX
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       NAVBAR
+  ═══════════════════════════════════════════ -->
+  <nav>
+    <div class="nav-logo">
+      <!-- Logo icon: shows uploaded image OR default emoji -->
+      <div class="nav-logo-icon" id="navLogoIconEl">
+        <span id="navLogoEmoji">👁️</span>
+        <img id="navLogoImg" src="" alt="Logo" style="display:none;width:100%;height:100%;object-fit:cover;border-radius:8px;" />
+      </div>
+      <div class="nav-logo-text">
+        <span id="navShopName">Narayan Optical</span>
+        <small id="navShopTagline">& Optometry Clinic</small>
+      </div>
+    </div>
+
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#products">Products</a></li>
+      <li><a href="#testimonials">Reviews</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="#appointment" class="nav-cta">Book Eye Test</a></li>
+    </ul>
+
+    <div class="nav-right-group">
+      <div class="admin-trigger-btn" id="adminTriggerBtn" onclick="openAdminLogin()" title="Admin Panel (☰)">
+        <span></span><span></span><span></span>
+      </div>
+      <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Nav -->
+  <div class="mobile-nav" id="mobileNav">
+    <button class="close-btn" onclick="toggleMenu()">✕</button>
+    <a href="#home"         onclick="toggleMenu()">Home</a>
+    <a href="#about"        onclick="toggleMenu()">About Us</a>
+    <a href="#services"     onclick="toggleMenu()">Services</a>
+    <a href="#products"     onclick="toggleMenu()">Products</a>
+    <a href="#appointment"  onclick="toggleMenu()">Book Appointment</a>
+    <a href="#testimonials" onclick="toggleMenu()">Reviews</a>
+    <a href="#contact"      onclick="toggleMenu()">Contact</a>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       HERO SECTION
+  ═══════════════════════════════════════════ -->
+  <section id="home">
+    <div class="hero-content">
+      <div class="hero-badge fade-in"><span>✦</span> Trusted Optical Care Since 2008</div>
+      <div class="hero-subtitle fade-in fade-in-delay-1" id="heroSubtitle">Narayan Optical &amp; Optometry Clinic</div>
+      <h1 class="hero-title fade-in fade-in-delay-1" id="heroTitle">
+        Clear Vision,<br /><em>Better Life.</em>
+      </h1>
+      <p class="hero-desc fade-in fade-in-delay-2" id="heroDesc">
+        Expert eye care tailored to you. From precision eye tests to designer frames —
+        we bring the world into perfect focus with warmth, expertise, and the latest technology.
+      </p>
+      <div class="hero-actions fade-in fade-in-delay-3">
+        <a href="#appointment"><button class="btn-primary">📅 Book Eye Test — Free</button></a>
+        <a href="#services"><button class="btn-outline">Explore Services →</button></a>
+      </div>
+      <div class="hero-stats fade-in fade-in-delay-4">
+        <div class="stat-item"><div class="stat-num">15+</div><div class="stat-label">Years Experience</div></div>
+        <div class="stat-item"><div class="stat-num">5K+</div><div class="stat-label">Happy Patients</div></div>
+        <div class="stat-item"><div class="stat-num">500+</div><div class="stat-label">Frame Styles</div></div>
+      </div>
+    </div>
+    <div class="hero-visual fade-in fade-in-delay-2">
+      <div class="eye-container">
+        <div class="eye-ring">
+          <div class="eye-svg-wrap">
+            <svg class="main-eye" width="120" height="120" viewBox="0 0 120 120" fill="none">
+              <path d="M10 60 C30 20, 90 20, 110 60 C90 100, 30 100, 10 60Z" fill="rgba(254,250,224,0.10)" stroke="#dda15e" stroke-width="2"/>
+              <circle cx="60" cy="60" r="22" fill="#1b4332" stroke="#dda15e" stroke-width="2"/>
+              <circle cx="60" cy="60" r="11" fill="#0d2218"/>
+              <circle cx="66" cy="54" r="4" fill="rgba(254,250,224,0.6)"/>
+              <circle cx="60" cy="60" r="18" fill="none" stroke="rgba(221,161,94,0.3)" stroke-width="1"/>
+            </svg>
+          </div>
+        </div>
+        <div class="float-card fc-top"><strong>👁️ 20/20</strong> Perfect Vision</div>
+        <div class="float-card fc-left"><strong>✓ Certified</strong> Optometrist</div>
+        <div class="float-card fc-bottom"><strong>Free</strong> Eye Checkup</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       ABOUT SECTION
+  ═══════════════════════════════════════════ -->
+  <section id="about">
+    <div class="about-visual fade-in">
+      <div class="about-img-block">👁️<div class="about-badge-float"><span class="num">15+</span><span class="lbl">Yrs of Trust</span></div></div>
+    </div>
+    <div class="about-content fade-in fade-in-delay-1">
+      <span class="section-tag">About the Clinic</span>
+      <h2 class="section-title" id="aboutTitle">Where <em>Science Meets</em><br />Caring Vision</h2>
+      <p class="section-desc" id="aboutDesc">Narayan Optical &amp; Optometry Clinic has been a cornerstone of quality eye care in our community since 2008. Led by a team of certified optometrists, we combine cutting-edge diagnostic tools with a warm, patient-first approach.</p>
+      <ul class="trust-list">
+        <li class="trust-item"><div class="trust-icon">🏆</div><div><h4>Certified Optometrists</h4><p>Our doctors hold recognized optometry certifications with ongoing specialist training.</p></div></li>
+        <li class="trust-item"><div class="trust-icon">🔬</div><div><h4>Advanced Diagnostic Equipment</h4><p>From computerized eye testing to retinal imaging — we use the latest clinical technology.</p></div></li>
+        <li class="trust-item"><div class="trust-icon">💎</div><div><h4>Premium Frame Collection</h4><p>500+ frames from global and Indian brands, for every face shape and budget.</p></div></li>
+        <li class="trust-item"><div class="trust-icon">🤝</div><div><h4>Personalized Eye Care</h4><p>Every patient receives a thorough, unhurried consultation tailored to their unique vision needs.</p></div></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       SERVICES
+  ═══════════════════════════════════════════ -->
+  <section id="services">
+    <div class="services-header fade-in">
+      <span class="section-tag">What We Offer</span>
+      <h2 class="section-title">Our <em>Expert</em> Services</h2>
+      <p class="section-desc">Comprehensive eye care under one roof — from your first eye test to the perfect pair of glasses.</p>
+    </div>
+    <div class="services-grid" id="servicesGrid"></div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       PRODUCTS
+  ═══════════════════════════════════════════ -->
+  <section id="products">
+    <div class="products-header fade-in">
+      <div>
+        <span class="section-tag">Our Collection</span>
+        <h2 class="section-title">Featured <em>Products</em></h2>
+      </div>
+      <p class="section-desc" style="max-width:360px;">Curated eyewear for every style, need, and budget.</p>
+    </div>
+    <div class="products-grid" id="productsGrid"></div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       APPOINTMENT
+  ═══════════════════════════════════════════ -->
+  <section id="appointment">
+    <div class="appt-wrapper">
+      <div class="appt-info fade-in">
+        <span class="section-tag" style="color:var(--gold);">Book Now</span>
+        <h2 class="section-title">Schedule Your<br /><em>Free Eye Test</em></h2>
+        <p class="section-desc">Get a comprehensive eye examination at no charge for new patients.</p>
+        <div class="appt-features">
+          <div class="appt-feat"><div class="appt-feat-icon">⏱️</div><span>Appointment in under 30 minutes</span></div>
+          <div class="appt-feat"><div class="appt-feat-icon">🏥</div><span>Certified optometrist consultation</span></div>
+          <div class="appt-feat"><div class="appt-feat-icon">📋</div><span>Detailed prescription report provided</span></div>
+          <div class="appt-feat"><div class="appt-feat-icon">💰</div><span>100% Free for first-time patients</span></div>
+        </div>
+      </div>
+      <div class="fade-in fade-in-delay-2">
+        <div class="booking-form-card">
+          <h3>Book Appointment</h3>
+          <p>Fill the form and we'll confirm your slot via WhatsApp / call.</p>
+          <div id="bookingForm">
+            <div class="form-row">
+              <div class="form-group"><label>Full Name</label><input type="text" id="bName" placeholder="Your name" /></div>
+              <div class="form-group"><label>Phone Number</label><input type="tel" id="bPhone" placeholder="+91 XXXXX XXXXX" /></div>
+            </div>
+            <div class="form-row">
+              <div class="form-group"><label>Preferred Date</label><input type="date" id="bDate" /></div>
+              <div class="form-group"><label>Service</label>
+                <select id="bService">
+                  <option value="">Select service</option>
+                  <option>Eye Testing</option><option>Spectacle Fitting</option>
+                  <option>Contact Lenses</option><option>Children's Eye Test</option><option>General Consultation</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group"><label>Message (Optional)</label><input type="text" id="bNote" placeholder="Any specific concern?" /></div>
+            <button class="btn-book" onclick="submitBooking()">✅ Confirm Appointment</button>
+          </div>
+          <div class="form-success" id="formSuccess">
+            <div class="check">🎉</div>
+            <h4>Appointment Booked!</h4>
+            <p>Thank you! We'll reach you shortly to confirm your slot.</p>
+            <button class="btn-book" style="margin-top:20px;" onclick="resetForm()">Book Another</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       TESTIMONIALS
+  ═══════════════════════════════════════════ -->
+  <section id="testimonials">
+    <div class="test-header fade-in">
+      <span class="section-tag">Happy Patients</span>
+      <h2 class="section-title">What Our <em>Patients Say</em></h2>
+      <p class="section-desc">Real experiences from real people — because nothing speaks louder than a happy, clear-sighted smile.</p>
+    </div>
+    <div class="test-grid">
+      <div class="test-card fade-in fade-in-delay-1"><div class="test-quote">"</div><p class="test-text">The eye test was incredibly thorough — they caught an issue my previous doctor had missed for years. My new glasses from their collection are perfect. Highly recommend!</p><div class="test-author"><div class="test-avatar">R</div><div><div class="test-name">Ramesh Kumar</div><div class="test-stars">★★★★★</div></div></div></div>
+      <div class="test-card fade-in fade-in-delay-2"><div class="test-quote">"</div><p class="test-text">Such a warm and professional team. My daughter was nervous about glasses but the staff made her feel completely at ease. We got a beautiful frame within our budget!</p><div class="test-author"><div class="test-avatar">P</div><div><div class="test-name">Priya Sharma</div><div class="test-stars">★★★★★</div></div></div></div>
+      <div class="test-card fade-in fade-in-delay-3"><div class="test-quote">"</div><p class="test-text">Best optical shop I've been to! The free eye checkup is a genuine service — no pressure to buy. I walked out with progressive lenses that changed my life.</p><div class="test-author"><div class="test-avatar">A</div><div><div class="test-name">Anil Verma</div><div class="test-stars">★★★★★</div></div></div></div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       CONTACT
+  ═══════════════════════════════════════════ -->
+  <section id="contact">
+    <div class="contact-info fade-in">
+      <span class="section-tag">Get In Touch</span>
+      <h2 class="section-title">Visit <em>Us Today</em></h2>
+      <p class="section-desc" style="margin-bottom:28px;">Walk in any time during clinic hours — we're always happy to help you see better.</p>
+      <div class="contact-card"><div class="contact-icon">📍</div><div><h4>Address</h4><p id="contactAddress">Narayan Optical & Optometry Clinic<br/>[Your Full Address Here]<br/>[City, State – PIN Code]</p></div></div>
+      <div class="contact-card"><div class="contact-icon">📞</div><div><h4>Phone</h4><a id="contactPhoneLink" href="tel:+91XXXXXXXXXX"><span id="contactPhone">+91-XXXXXXXXXX</span></a></div></div>
+      <div class="contact-card"><div class="contact-icon">📧</div><div><h4>Email</h4><a id="contactEmailLink" href="mailto:info@narayanoptical.com"><span id="contactEmail">info@narayanoptical.com</span></a></div></div>
+      <div class="contact-card"><div class="contact-icon">💬</div><div><h4>WhatsApp</h4><a id="contactWaLink" href="https://wa.me/91XXXXXXXXXX"><span id="contactWa">+91-XXXXXXXXXX</span></a></div></div>
+      <div class="contact-card"><div class="contact-icon">🕐</div><div><h4>Clinic Hours</h4><p id="siteHoursText">Monday – Saturday: 9:00 AM – 8:30 PM<br/>Sunday: 10:00 AM – 2:00 PM</p><div id="shopStatusBadge" class="shop-status-badge closed"><span class="dot"></span><span id="shopStatusText">Checking...</span></div></div></div>
+      <div class="contact-actions">
+        <a id="callNowBtn" href="tel:+91XXXXXXXXXX" class="btn-call">📞 Call Now</a>
+        <a id="waBtn" href="https://wa.me/91XXXXXXXXXX?text=Hello" class="btn-whatsapp" target="_blank">💬 WhatsApp</a>
+      </div>
+    </div>
+    <div class="fade-in fade-in-delay-2">
+      <div class="map-container">
+        <!-- ★ REPLACE iframe src below with your Google Maps Embed URL ★ -->
+        <iframe id="siteMapFrame"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3558.3627820984937!2d80.91530097459063!3d26.88042167668539!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399957e4fbe23cf7%3A0xe6ffc54f3a26eb01!2sLucknow%2C%20Uttar%20Pradesh!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
+          allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Narayan Optical Location">
+        </iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════════ -->
+  <footer>
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="nav-logo" style="margin-bottom:0;">
+          <div class="nav-logo-icon">👁️</div>
+          <div class="nav-logo-text"><span id="footerShopName">Narayan Optical</span><small id="footerTagline">& Optometry Clinic</small></div>
+        </div>
+        <p>Your trusted partner for clear, healthy vision since 2008. Combining clinical expertise with a warm, patient-first approach.</p>
+      </div>
+      <div class="footer-col"><h5>Quick Links</h5><ul class="footer-links"><li><a href="#home">Home</a></li><li><a href="#about">About Us</a></li><li><a href="#services">Services</a></li><li><a href="#products">Products</a></li><li><a href="#appointment">Book Appointment</a></li><li><a href="#contact">Contact</a></li></ul></div>
+      <div class="footer-col"><h5>Clinic Hours</h5><div class="footer-hours"><div>Monday – Friday</div><div style="color:var(--gold);font-weight:500;">9:00 AM – 8:30 PM</div><div style="margin-top:10px;">Saturday</div><div style="color:var(--gold);font-weight:500;">9:00 AM – 8:00 PM</div><div style="margin-top:10px;">Sunday</div><div style="color:var(--gold);font-weight:500;">10:00 AM – 2:00 PM</div></div></div>
+    </div>
+    <div class="footer-bottom"><p>© 2025 Narayan Optical & Optometry Clinic. All rights reserved.</p><p style="color:rgba(254,250,224,0.28);">Designed with ♥ for clear vision.</p></div>
+  </footer>
+
+  <!-- Floating Buttons -->
+  <a id="floatWaBtn" href="https://wa.me/91XXXXXXXXXX?text=Hello" class="float-wa" target="_blank" title="Chat on WhatsApp">💬</a>
+  <div class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top">↑</div>
+
+
+  <!-- ████████████████████████████████████████████████████████████████
+       ADMIN PANEL HTML
+  ████████████████████████████████████████████████████████████████ -->
+
+  <!-- ── Admin Login Modal ── -->
+  <div class="admin-modal-overlay" id="adminLoginModal">
+    <div class="admin-login-box">
+      <button class="modal-close" onclick="closeAdminLogin()">✕</button>
+      <div class="login-logo">
+        <div class="l-icon" id="loginLogoIcon">🔐</div>
+        <h2>Admin Login</h2>
+        <p>Narayan Optical Control Panel</p>
+      </div>
+      <div class="login-error" id="loginError">❌ Invalid credentials. Please try again.</div>
+      <div class="admin-field"><label>Admin ID</label><input type="text" id="adminIdInput" placeholder="" autocomplete="off" /></div>
+      <div class="admin-field"><label>Password</label><input type="password" id="adminPassInput" placeholder="" autocomplete="off" onkeydown="if(event.key==='Enter') doAdminLogin()" /></div>
+      <button class="btn-admin-login" onclick="doAdminLogin()">🚀 Access Dashboard</button>
+    </div>
+  </div>
+
+  <!-- ── Admin Dashboard ── -->
+  <div class="admin-dashboard" id="adminDashboard">
+
+    <!-- Top Bar -->
+    <div class="admin-topbar">
+      <div class="admin-topbar-left">
+        <div style="width:34px;height:34px;background:linear-gradient(135deg,var(--gold-dark),var(--gold));border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:1.05rem;overflow:hidden;" id="adminTopLogoEl">👁️</div>
+        <div class="admin-brand">Narayan Optical<small>Admin Control Panel v3</small></div>
+      </div>
+      <div class="admin-topbar-right">
+        <button class="atb-btn atb-theme" onclick="toggleSiteTheme()" id="themeToggleBtn" title="Toggle Dark/Light Mode">🌙</button>
+        <button class="atb-btn atb-site"   onclick="closeAdminDashboard()">🌐 <span>View Site</span></button>
+        <button class="atb-btn atb-logout" onclick="adminLogout()">⏏ <span>Logout</span></button>
+      </div>
+    </div>
+
+    <!-- Body -->
+    <div class="admin-body">
+
+      <!-- ─── Sidebar ─── -->
+      <div class="admin-sidebar" id="adminSidebar">
+        <div class="sidebar-section">
+          <div class="sidebar-label">Overview</div>
+          <div class="sidebar-item active" onclick="switchTab('dashboard',this)"><span class="s-icon">📊</span> Dashboard</div>
+        </div>
+        <div class="sidebar-section">
+          <div class="sidebar-label">Site Identity</div>
+          <div class="sidebar-item" onclick="switchTab('identity',this)"><span class="s-icon">🏷️</span> Shop Identity</div>
+          <div class="sidebar-item" onclick="switchTab('logo',this)"><span class="s-icon">🖼️</span> Logo Manager</div>
+          <div class="sidebar-item" onclick="switchTab('hero',this)"><span class="s-icon">🏠</span> Hero Section</div>
+          <div class="sidebar-item" onclick="switchTab('banner',this)"><span class="s-icon">📣</span> Offer Banner</div>
+          <div class="sidebar-item" onclick="switchTab('about',this)"><span class="s-icon">📖</span> About Section</div>
+        </div>
+        <div class="sidebar-section">
+          <div class="sidebar-label">Content</div>
+          <div class="sidebar-item" onclick="switchTab('services',this)"><span class="s-icon">⚕️</span> Services</div>
+          <div class="sidebar-item" onclick="switchTab('products',this)"><span class="s-icon">👓</span> Products</div>
+          <div class="sidebar-item" onclick="switchTab('gallery',this)"><span class="s-icon">🖼</span> Gallery</div>
+        </div>
+        <div class="sidebar-section">
+          <div class="sidebar-label">Operations</div>
+          <div class="sidebar-item" onclick="switchTab('appointments',this)"><span class="s-icon">📅</span> Appointments <span class="sidebar-badge" id="apptBadge">0</span></div>
+          <div class="sidebar-item" onclick="switchTab('contact',this)"><span class="s-icon">📞</span> Contact Info</div>
+          <div class="sidebar-item" onclick="switchTab('map',this)"><span class="s-icon">🗺️</span> Map & Location</div>
+        </div>
+        <div class="sidebar-section">
+          <div class="sidebar-label">System</div>
+          <div class="sidebar-item" onclick="switchTab('settings',this)"><span class="s-icon">⚙️</span> Settings</div>
+        </div>
+      </div>
+
+      <!-- ─── Content Area ─── -->
+      <div class="admin-content">
+
+        <!-- ═══════ DASHBOARD ═══════ -->
+        <div class="admin-panel active" id="tab-dashboard">
+          <div class="panel-header">
+            <h2>📊 Dashboard Overview</h2>
+            <p>Welcome back, Admin. Here's a snapshot of Narayan Optical.</p>
+          </div>
+          <div class="stats-row" id="dashboardStats"></div>
+          <div class="admin-card">
+            <h3><span>📅</span> Recent Appointments</h3>
+            <div class="admin-table-wrap">
+              <table class="admin-table"><thead><tr><th>Name</th><th>Phone</th><th>Date</th><th>Service</th><th>Booked At</th></tr></thead>
+              <tbody id="recentApptBody"></tbody></table>
+            </div>
+          </div>
+          <div class="admin-card">
+            <h3><span>💡</span> Quick Actions</h3>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <button class="abt-primary" onclick="switchTab('identity', document.querySelector('[onclick*=identity]'))">🏷️ Edit Shop Name</button>
+              <button class="abt-edit"    onclick="switchTab('logo',     document.querySelector('[onclick*=logo]'))">🖼️ Upload Logo</button>
+              <button class="abt-save"    onclick="switchTab('contact',  document.querySelector('[onclick*=contact]'))">📞 Update Contact</button>
+              <button class="abt-warn"    onclick="switchTab('map',      document.querySelector('[onclick*=map]'))">🗺️ Edit Map</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ═══════ SHOP IDENTITY ═══════ -->
+        <div class="admin-panel" id="tab-identity">
+          <div class="panel-header"><h2>🏷️ Shop Identity</h2><p>Edit the shop name, tagline, and browser tab title — updates instantly across the entire website.</p></div>
+
+          <div class="preview-split">
+            <div class="admin-card" style="margin-bottom:0;">
+              <h3><span>✏️</span> Edit Identity</h3>
+              <div class="af-group"><label>Shop Name (Main)</label><input type="text" id="si-name" placeholder="Narayan Optical" oninput="livePreviewIdentity()" /></div>
+              <div class="af-group"><label>Tagline / Subtitle</label><input type="text" id="si-tagline" placeholder="& Optometry Clinic" oninput="livePreviewIdentity()" /></div>
+              <div class="af-group"><label>Browser Tab Title</label><input type="text" id="si-tabTitle" placeholder="Narayan Optical & Optometry Clinic" oninput="livePreviewIdentity()" /></div>
+              <div style="margin-top:4px;display:flex;gap:10px;">
+                <button class="abt-primary" onclick="saveIdentity()">💾 Save & Apply</button>
+              </div>
+            </div>
+            <div class="preview-panel" style="margin-bottom:0;">
+              <div class="preview-panel-label">Live Preview</div>
+              <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
+                <div style="width:44px;height:44px;background:var(--gold);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;overflow:hidden;" id="prevLogoSmall"><span id="prevLogoEmoji">👁️</span></div>
+                <div>
+                  <div class="preview-text-large" id="prevShopName">Narayan Optical</div>
+                  <div class="preview-text-sub" id="prevTagline" style="margin-top:2px;">& Optometry Clinic</div>
+                </div>
+              </div>
+              <div style="padding:10px;background:rgba(0,0,0,0.2);border-radius:8px;">
+                <div style="font-size:0.72rem;color:var(--admin-muted);margin-bottom:4px;">Browser Tab:</div>
+                <div style="font-size:0.82rem;color:var(--admin-text);" id="prevTabTitle">Narayan Optical & Optometry Clinic</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ═══════ LOGO MANAGER ═══════ -->
+        <div class="admin-panel" id="tab-logo">
+          <div class="panel-header"><h2>🖼️ Logo Manager</h2><p>Upload your shop logo — it will appear in the navbar, login screen, and admin panel.</p></div>
+          <div class="admin-card">
+            <h3><span>📤</span> Upload Logo</h3>
+            <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap;">
+              <div class="logo-preview-sm" id="logoPreviewLg" onclick="document.getElementById('logoFileInput').click()">
+                <span id="logoPreviewEmoji">👁️</span>
+                <img id="logoPreviewImg" src="" alt="" style="display:none;width:100%;height:100%;object-fit:cover;" />
+              </div>
+              <div style="flex:1;">
+                <input type="file" id="logoFileInput" accept="image/*" style="display:none" onchange="handleLogoUpload(this)" />
+                <button class="abt-primary" onclick="document.getElementById('logoFileInput').click()">📂 Choose Logo Image</button>
+                <p class="af-hint" style="margin-top:8px;">Recommended: Square image, PNG/JPG, min 200×200px. Stored as Base64 in LocalStorage.</p>
+                <p class="af-hint">Current logo: <span id="logoStatusText" style="color:var(--gold);">Default emoji (👁️)</span></p>
+              </div>
+            </div>
+            <div style="margin-top:16px;display:flex;gap:10px;">
+              <button class="abt-primary" onclick="applyLogoFromPreview()">✅ Apply Logo</button>
+              <button class="abt-danger"  onclick="removeLogo()">🗑 Remove Logo</button>
+            </div>
+          </div>
+          <div class="admin-card">
+            <h3><span>👁️</span> Logo Placement Preview</h3>
+            <div style="display:flex;gap:16px;flex-wrap:wrap;">
+              <div style="background:rgba(27,67,50,0.97);padding:14px 20px;border-radius:10px;display:flex;align-items:center;gap:10px;min-width:260px;">
+                <div style="width:36px;height:36px;background:var(--gold);border-radius:9px;display:flex;align-items:center;justify-content:center;overflow:hidden;" id="navbarLogoPreviewEl"><span>👁️</span></div>
+                <div style="font-family:'Cinzel',serif;color:#fefae0;font-size:0.9rem;line-height:1.2;">Narayan Optical<br/><span style="font-size:0.6rem;color:var(--gold);font-family:'DM Sans',sans-serif;letter-spacing:0.1em;">& OPTOMETRY CLINIC</span></div>
+              </div>
+              <div style="background:linear-gradient(135deg,var(--gold-dark),var(--gold));padding:12px;border-radius:14px;display:flex;align-items:center;justify-content:center;width:64px;height:64px;overflow:hidden;" id="loginLogoPreviewEl"><span>🔐</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ═══════ HERO SECTION ═══════ -->
+        <div class="admin-panel" id="tab-hero">
+          <div class="panel-header"><h2>🏠 Hero Section Editor</h2><p>Update homepage hero text — all changes reflect instantly on the site.</p></div>
+          <div class="preview-split">
+            <div class="admin-card" style="margin-bottom:0;">
+              <h3><span>✏️</span> Hero Content</h3>
+              <div class="af-group"><label>Main Title Line 1</label><input type="text" id="ah-line1" placeholder="Clear Vision," oninput="livePreviewHero()" /></div>
+              <div class="af-group"><label>Main Title Line 2 (italic gold)</label><input type="text" id="ah-line2" placeholder="Better Life." oninput="livePreviewHero()" /></div>
+              <div class="af-group"><label>Subtitle (clinic name line)</label><input type="text" id="ah-subtitle" placeholder="Narayan Optical & Optometry Clinic" oninput="livePreviewHero()" /></div>
+              <div class="af-group"><label>Description</label><textarea id="ah-desc" rows="3" placeholder="Expert eye care tailored to you..." oninput="livePreviewHero()"></textarea></div>
+              <button class="abt-primary" onclick="saveHero()">💾 Save & Apply</button>
+            </div>
+            <div class="preview-panel" style="margin-bottom:0;">
+              <div class="preview-panel-label">Live Preview</div>
+              <div class="preview-text-large" id="prevHeroSubtitle" style="font-size:0.78rem;color:rgba(221,161,94,0.7);font-family:'Cinzel',serif;margin-bottom:6px;"></div>
+              <div class="preview-text-large" id="prevHeroLine1"></div>
+              <div class="preview-text-large" id="prevHeroLine2" style="color:var(--gold);font-style:italic;"></div>
+              <div class="preview-text-sub" id="prevHeroDesc" style="margin-top:10px;"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ═══════ OFFER BANNER ═══════ -->
+        <div class="admin-panel" id="tab-banner">
+          <div class="panel-header"><h2>📣 Offer Banner Editor</h2><p>Edit the golden announcement bar at the top of the page.</p></div>
+          <div class="admin-card">
+            <h3><span>🎉</span> Banner Text</h3>
+            <div class="af-group"><label>Banner HTML Content (use &lt;span&gt;|&lt;/span&gt; as separator)</label>
+              <textarea id="ab-text" rows="3" placeholder="🎉 Free Eye Checkup ... <span>|</span> ..."></textarea>
+            </div>
+            <div style="padding:12px;background:var(--admin-surface);border-radius:8px;margin-bottom:14px;">
+              <div style="font-size:0.72rem;color:var(--admin-muted);margin-bottom:6px;">Live Preview:</div>
+              <div id="bannerPreview" style="background:linear-gradient(90deg,#bc6c25,#dda15e,#bc6c25);color:#1b4332;padding:8px 14px;border-radius:6px;font-size:0.85rem;font-weight:600;text-align:center;"></div>
+            </div>
+            <button class="abt-primary" onclick="saveBanner()">💾 Save & Apply</button>
+          </div>
+        </div>
+
+        <!-- ═══════ ABOUT SECTION ═══════ -->
+        <div class="admin-panel" id="tab-about">
+          <div class="panel-header"><h2>📖 About Section Editor</h2><p>Update the about section title and description shown on the website.</p></div>
+          <div class="preview-split">
+            <div class="admin-card" style="margin-bottom:0;">
+              <h3><span>✏️</span> About Content</h3>
+              <div class="af-group"><label>Section Title (use | for italic part)</label><input type="text" id="abt-title" placeholder="Where Science Meets Caring Vision" oninput="livePreviewAbout()" /></div>
+              <div class="af-hint" style="margin-bottom:10px;">Tip: Use <strong style="color:var(--gold);">|</strong> to split title: <em style="color:var(--admin-muted);">"Where |Science Meets| Vision"</em> — the part between | | will be italic gold.</div>
+              <div class="af-group"><label>Description Paragraph</label><textarea id="abt-desc" rows="5" oninput="livePreviewAbout()" placeholder="About your clinic..."></textarea></div>
+              <button class="abt-primary" onclick="saveAbout()">💾 Save & Apply</button>
+            </div>
+            <div class="preview-panel" style="margin-bottom:0;">
+              <div class="preview-panel-label">Live Preview</div>
+              <div class="preview-text-large" style="font-size:1.05rem;line-height:1.4;" id="prevAboutTitle"></div>
+              <div class="preview-text-sub" id="prevAboutDesc" style="margin-top:10px;"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ═══════ SERVICES ═══════ -->
+        <div class="admin-panel" id="tab-services">
+          <div class="panel-header"><h2>⚕️ Services Manager</h2><p>Add, edit, or remove services displayed on the website.</p></div>
+          <div class="admin-card">
+            <h3><span>➕</span> Add New Service</h3>
+            <div class="af-row">
+              <div class="af-group"><label>Service Name</label><input type="text" id="svc-name" placeholder="Eye Testing" /></div>
+              <div class="af-group"><label>Icon (emoji)</label><input type="text" id="svc-icon" placeholder="👁️" maxlength="4" /></div>
+            </div>
+            <div class="af-group"><label>Description</label><textarea id="svc-desc" rows="2" placeholder="Brief description..."></textarea></div>
+            <button class="abt-primary" onclick="addService()">➕ Add Service</button>
+          </div>
+          <div class="admin-card">
+            <h3><span>📋</span> Current Services</h3>
+            <div id="servicesList"></div>
+          </div>
+        </div>
+
+        <!-- ═══════ PRODUCTS ═══════ -->
+        <div class="admin-panel" id="tab-products">
+          <div class="panel-header"><h2>👓 Products Manager</h2><p>Manage the products displayed in your shop section.</p></div>
+          <div class="admin-card">
+            <h3><span>➕</span> Add New Product</h3>
+            <div class="af-row">
+              <div class="af-group"><label>Product Name</label><input type="text" id="prod-name" placeholder="Classic Full-Rim Frames" /></div>
+              <div class="af-group"><label>Tag Label</label><input type="text" id="prod-tag" placeholder="Best Seller" /></div>
+            </div>
+            <div class="af-group"><label>Description</label><textarea id="prod-desc" rows="2" placeholder="Brief product description..."></textarea></div>
+            <div class="af-row">
+              <div class="af-group"><label>Price (₹)</label><input type="number" id="prod-price" placeholder="999" min="0" step="1" /></div>
+              <div class="af-group"><label>Emoji (fallback icon)</label><input type="text" id="prod-emoji" placeholder="🕶️" maxlength="4" /></div>
+            </div>
+            <div class="af-row">
+              <div class="af-group"><label>BG Color / Gradient CSS</label><input type="text" id="prod-bg" placeholder="linear-gradient(135deg,#1b4332,#2d6a4f)" /></div>
+              <div class="af-group"><label>In Stock</label><select id="prod-instock"><option value="true">✅ In Stock</option><option value="false">❌ Out of Stock</option></select></div>
+            </div>
+            <div class="af-group"><label>Product Image (optional)</label>
+              <div class="img-preview" id="prodImgPreview" onclick="document.getElementById('prodImgInput').click()"><span class="preview-icon">🖼️</span><span>Click to upload image</span></div>
+              <input type="file" id="prodImgInput" accept="image/*" style="display:none" onchange="handleProductImg(this)" />
+            </div>
+            <button class="abt-primary" onclick="addProduct()">➕ Add Product</button>
+          </div>
+          <div class="admin-card">
+            <h3><span>📦</span> Current Products</h3>
+            <div class="admin-product-grid" id="adminProductGrid"></div>
+          </div>
+        </div>
+
+        <!-- ═══════ GALLERY ═══════ -->
+        <div class="admin-panel" id="tab-gallery">
+          <div class="panel-header"><h2>🖼 Gallery Manager</h2><p>Upload and manage images for your shop gallery. Stored locally in LocalStorage.</p></div>
+          <div class="admin-card">
+            <h3><span>📤</span> Upload Images</h3>
+            <div class="img-preview" style="height:100px;" onclick="document.getElementById('galleryImgInput').click()">
+              <span class="preview-icon">📸</span><span>Click to upload one or more images</span>
+            </div>
+            <input type="file" id="galleryImgInput" accept="image/*" multiple style="display:none" onchange="handleGalleryUpload(this)" />
+            <div class="af-hint" style="margin-top:8px;">⚠️ Large images may exceed LocalStorage limits (~5MB total). Use optimized/compressed images.</div>
+          </div>
+          <div class="admin-card">
+            <h3><span>🖼</span> Gallery Images (<span id="galleryCount">0</span>)</h3>
+            <div class="gallery-grid" id="galleryGrid"></div>
+            <div id="galleryEmpty" style="color:var(--admin-muted);text-align:center;padding:24px;font-style:italic;display:none;">No gallery images yet.</div>
+          </div>
+        </div>
+
+        <!-- ═══════ APPOINTMENTS ═══════ -->
+        <div class="admin-panel" id="tab-appointments">
+          <div class="panel-header"><h2>📅 Appointments Manager</h2><p>View and manage all appointment bookings from your website.</p></div>
+          <div class="admin-card" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;padding:16px 22px;">
+            <div style="color:var(--admin-muted);font-size:0.86rem;">Total: <strong id="totalApptCount" style="color:var(--gold);">0</strong> bookings</div>
+            <button class="abt-danger" onclick="confirmClearAllAppts()">🗑 Clear All Appointments</button>
+          </div>
+          <div class="admin-card">
+            <h3><span>📋</span> All Bookings</h3>
+            <div class="admin-table-wrap">
+              <table class="admin-table"><thead><tr><th>#</th><th>Name</th><th>Phone</th><th>Date</th><th>Service</th><th>Note</th><th>Booked At</th><th>Action</th></tr></thead>
+              <tbody id="allApptBody"></tbody></table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ═══════ CONTACT INFO ═══════ -->
+        <div class="admin-panel" id="tab-contact">
+          <div class="panel-header"><h2>📞 Contact Info Editor</h2><p>Update contact details — all changes reflect live on the website.</p></div>
+          <div class="admin-card">
+            <h3><span>📞</span> Phone & WhatsApp</h3>
+            <div class="af-row">
+              <div class="af-group"><label>Phone Number</label><input type="text" id="ci-phone" placeholder="+91-XXXXXXXXXX" /></div>
+              <div class="af-group"><label>WhatsApp (digits, e.g. 91XXXXXXXXXX)</label><input type="text" id="ci-wa" placeholder="91XXXXXXXXXX" /></div>
+            </div>
+            <div class="af-group"><label>Email Address</label><input type="email" id="ci-email" placeholder="info@narayanoptical.com" /></div>
+            <button class="abt-primary" onclick="saveContactInfo()">💾 Save Contact Info</button>
+          </div>
+          <div class="admin-card">
+            <h3><span>📍</span> Address</h3>
+            <div class="af-group"><label>Full Address (use line breaks)</label><textarea id="ci-address" rows="4" placeholder="Narayan Optical & Optometry Clinic&#10;[Street, Area]&#10;[City, State - PIN]"></textarea></div>
+            <button class="abt-primary" onclick="saveAddress()">💾 Save Address</button>
+          </div>
+          <div class="admin-card">
+            <h3><span>🕐</span> Shop Opening Hours</h3>
+            <p style="color:var(--admin-muted);font-size:0.82rem;margin-bottom:16px;">Set opening and closing times. The website will automatically show &quot;Open Now&quot; or &quot;Closed Now&quot; based on the current time.</p>
+            <div class="af-row">
+              <div class="af-group"><label>Opening Time</label><input type="time" id="sh-open" /></div>
+              <div class="af-group"><label>Closing Time</label><input type="time" id="sh-close" /></div>
+            </div>
+            <button class="abt-primary" onclick="saveShopHours()">💾 Save Shop Hours</button>
+          </div>
+        </div>
+
+        <!-- ═══════ MAP & LOCATION ═══════ -->
+        <div class="admin-panel" id="tab-map">
+          <div class="panel-header"><h2>🗺️ Map & Location</h2><p>Update the Google Maps embed shown in the Contact section.</p></div>
+          <div class="admin-card">
+            <h3><span>🔗</span> Google Maps Embed URL</h3>
+            <div class="af-group">
+              <label>Paste Google Maps Embed src URL</label>
+              <textarea id="map-embed-url" rows="3" placeholder="https://www.google.com/maps/embed?pb=..."></textarea>
+              <div class="af-hint">To get this: Google Maps → Share → Embed a map → Copy the URL inside <code>src="..."</code></div>
+            </div>
+            <button class="abt-primary" onclick="saveMapEmbed()" style="margin-right:10px;">💾 Save & Apply Map</button>
+          </div>
+          <div class="admin-card">
+            <h3><span>📍</span> Quick Location by Coordinates</h3>
+            <div class="af-row">
+              <div class="af-group"><label>Latitude</label><input type="text" id="map-lat" placeholder="e.g. 26.8467" /></div>
+              <div class="af-group"><label>Longitude</label><input type="text" id="map-lng" placeholder="e.g. 80.9462" /></div>
+            </div>
+            <div class="af-group"><label>Zoom Level (1-20)</label><input type="number" id="map-zoom" placeholder="15" min="1" max="20" /></div>
+            <button class="abt-primary" onclick="saveMapCoords()">📍 Apply from Coordinates</button>
+          </div>
+          <div class="admin-card">
+            <h3><span>👁️</span> Map Preview</h3>
+            <div class="map-preview-box"><iframe id="adminMapPreview" src="" style="width:100%;height:260px;border:none;display:block;" title="Map Preview"></iframe></div>
+            <div id="mapNoPreview" style="padding:40px;text-align:center;color:var(--admin-muted);">Save a map URL to see the preview here.</div>
+          </div>
+        </div>
+
+        <!-- ═══════ SETTINGS ═══════ -->
+        <div class="admin-panel" id="tab-settings">
+          <div class="panel-header"><h2>⚙️ Settings</h2><p>Manage theme, credentials, and system reset options.</p></div>
+
+          <div class="admin-card">
+            <h3><span>🌓</span> Appearance</h3>
+            <div class="settings-row">
+              <div class="sr-info"><h4>Website Dark Mode</h4><p>Toggle the main website between light and dark theme</p></div>
+              <label class="toggle-switch"><input type="checkbox" id="darkModeToggle" onchange="toggleSiteTheme()" /><span class="toggle-slider"></span></label>
+            </div>
+          </div>
+
+          <div class="admin-card">
+            <h3><span>🔐</span> Change Admin Credentials</h3>
+            <p style="color:var(--admin-muted);font-size:0.82rem;margin-bottom:16px;">Current credentials: ID = <span class="cred-chip" id="currentCredId">—</span> &nbsp; Password = <span class="cred-chip">••••••</span></p>
+            <div class="af-row">
+              <div class="af-group"><label>New Admin ID / Username</label><input type="text" id="new-admin-id" placeholder="New admin ID" autocomplete="off" /></div>
+              <div class="af-group"><label>New Password</label><input type="password" id="new-admin-pass" placeholder="New password" autocomplete="new-password" /></div>
+            </div>
+            <div class="af-group"><label>Confirm New Password</label><input type="password" id="new-admin-pass-confirm" placeholder="Confirm password" /></div>
+            <button class="abt-primary" onclick="saveNewCredentials()">🔑 Update Credentials</button>
+          </div>
+
+          <div class="admin-card">
+            <h3><span>🔄</span> Data Management</h3>
+            <div class="settings-row">
+              <div class="sr-info"><h4>Export All Data</h4><p>Download all LocalStorage data as a JSON backup file</p></div>
+              <button class="abt-save" onclick="exportAllData()">📥 Export JSON</button>
+            </div>
+            <div class="settings-row">
+              <div class="sr-info"><h4>Reset to Default</h4><p>Clear all saved customizations and revert to original design</p></div>
+              <button class="abt-danger" onclick="confirmResetAll()">⚠️ Reset Everything</button>
+            </div>
+            <div class="settings-row">
+              <div class="sr-info"><h4>Clear Appointments Only</h4><p>Remove all booking records</p></div>
+              <button class="abt-warn" onclick="confirmClearAllAppts()">🗑 Clear Bookings</button>
+            </div>
+          </div>
+
+          <div class="admin-card">
+            <h3><span>ℹ️</span> System Info</h3>
+            <div id="systemInfo" style="font-size:0.82rem;color:var(--admin-muted);line-height:2.0;"></div>
+          </div>
+        </div>
+
+      </div><!-- /admin-content -->
+    </div><!-- /admin-body -->
+  </div><!-- /admin-dashboard -->
+
+  <!-- Confirm Dialog -->
+  <div class="confirm-overlay" id="confirmOverlay">
+    <div class="confirm-box">
+      <div class="c-icon">⚠️</div>
+      <h3 id="confirmTitle">Are you sure?</h3>
+      <p id="confirmMsg">This action cannot be undone.</p>
+      <div class="confirm-btns">
+        <button class="abt-save" onclick="closeConfirm()">✕ Cancel</button>
+        <button class="abt-danger" id="confirmOkBtn">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Service Modal -->
+  <div class="edit-modal-overlay" id="editServiceModal">
+    <div class="edit-modal-box">
+      <h3>✏️ Edit Service</h3>
+      <input type="hidden" id="es-id" />
+      <div class="af-row">
+        <div class="af-group"><label>Service Name</label><input type="text" id="es-name" /></div>
+        <div class="af-group"><label>Icon (emoji)</label><input type="text" id="es-icon" maxlength="4" /></div>
+      </div>
+      <div class="af-group"><label>Description</label><textarea id="es-desc" rows="3"></textarea></div>
+      <div class="modal-footer">
+        <button class="abt-save" onclick="closeEditService()">✕ Cancel</button>
+        <button class="abt-primary" onclick="saveEditService()">💾 Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Product Modal -->
+  <div class="edit-modal-overlay" id="editProductModal">
+    <div class="edit-modal-box">
+      <h3>✏️ Edit Product</h3>
+      <input type="hidden" id="ep-id" />
+      <div class="af-row">
+        <div class="af-group"><label>Product Name</label><input type="text" id="ep-name" /></div>
+        <div class="af-group"><label>Tag Label</label><input type="text" id="ep-tag" /></div>
+      </div>
+      <div class="af-group"><label>Description</label><textarea id="ep-desc" rows="2"></textarea></div>
+      <div class="af-row">
+        <div class="af-group"><label>Emoji Icon</label><input type="text" id="ep-emoji" maxlength="4" /></div>
+        <div class="af-group"><label>Background CSS</label><input type="text" id="ep-bg" /></div>
+      </div>
+      <div class="af-group"><label>Product Image</label>
+        <div class="img-preview" id="editProdImgPreview" onclick="document.getElementById('editProdImgInput').click()"><span class="preview-icon">🖼️</span><span>Click to change</span></div>
+        <input type="file" id="editProdImgInput" accept="image/*" style="display:none" onchange="handleEditProductImg(this)" />
+      </div>
+      <div class="modal-footer">
+        <button class="abt-save" onclick="closeEditProduct()">✕ Cancel</button>
+        <button class="abt-primary" onclick="saveEditProduct()">💾 Save</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ████████████████████████████████████████████████████████████████
+       JAVASCRIPT
+  ████████████████████████████████████████████████████████████████ -->
+  <script>
+  'use strict';
+
+  /* ╔══════════════════════════════════════════════════════════╗
+     ║  ★★★  ADMIN CREDENTIALS  ★★★  ║
+     ╚══════════════════════════════════════════════════════════╝ */
+  const ADMIN_DEFAULTS = { id: '8475846432', password: 'Aa@12345' };
+  /* ══════════════════════════════════════════════════════════ */
+
+  /* ── Default content data ── */
+  const DEFAULT_SERVICES = [
+    { id: 1, icon: '👁️', name: 'Comprehensive Eye Testing',   desc: 'Thorough computerized and manual eye examinations to accurately assess your vision.' },
+    { id: 2, icon: '👓', name: 'Prescription Spectacles',      desc: 'High-quality single vision, bifocal, and progressive lenses fitted to your exact prescription.' },
+    { id: 3, icon: '🔵', name: 'Contact Lenses',               desc: 'Daily, monthly, and specialized contact lenses with expert fitting consultations.' },
+    { id: 4, icon: '🖼️', name: 'Premium Frame Selection',     desc: '500+ stylish frames from leading brands — find the perfect fit for your face shape.' },
+    { id: 5, icon: '🌑', name: 'Designer Sunglasses',          desc: 'UV-protective prescription and fashion sunglasses for everyday, sports, and driving.' },
+    { id: 6, icon: '🧒', name: "Children's Eye Care",          desc: 'Specialized pediatric assessments and child-friendly frames for healthy vision development.' }
+  ];
+  const DEFAULT_PRODUCTS = [
+    { id: 1, name: 'Classic Full-Rim Frames', tag: 'Best Seller', desc: 'Timeless acetate frames with premium anti-glare lenses.', emoji: '🕶️', bg: 'linear-gradient(135deg,#1b4332,#2d6a4f)', img: '' },
+    { id: 2, name: 'UV400 Sunglasses',        tag: 'New Arrival', desc: 'Block 100% UVA & UVB rays. Polarized options available.', emoji: '😎', bg: 'linear-gradient(135deg,#2c3e50,#34495e)', img: '' },
+    { id: 3, name: 'Progressive Lenses',      tag: 'Premium',     desc: 'Multi-focal lenses for seamless near-to-far vision.',      emoji: '🔬', bg: 'linear-gradient(135deg,#4a0e8f,#7b2d8b)', img: '' },
+    { id: 4, name: "Kids' Frame Collection",  tag: 'Kids',        desc: 'Flexible, impact-resistant frames for active children.',   emoji: '🥽', bg: 'linear-gradient(135deg,#8b4513,#a0522d)', img: '' }
+  ];
+
+  /* ══════════════════════════════════════════════════════════
+     LOCALSTORAGE HELPERS
+  ══════════════════════════════════════════════════════════ */
+  const LS = {
+    get: (k, def) => { try { const v = localStorage.getItem(k); return v === null ? def : JSON.parse(v); } catch { return def; } },
+    set: (k, v)   => { try { localStorage.setItem(k, JSON.stringify(v)); } catch(e) { showToast('Storage full! Try removing some images.', 'error'); } },
+    del: (k)      => localStorage.removeItem(k),
+    keys: ()      => Object.keys(localStorage)
+  };
+
+  /* ══════════════════════════════════════════════════════════
+     TOAST SYSTEM
+  ══════════════════════════════════════════════════════════ */
+  function showToast(msg, type = 'success', dur = 3500) {
+    const icons = { success: '✅', error: '❌', info: 'ℹ️', warn: '⚠️' };
+    const tc = document.getElementById('toastContainer');
+    const t  = document.createElement('div');
+    t.className = `toast ${type}`;
+    t.innerHTML = `<span class="t-icon">${icons[type] || '✅'}</span><span>${msg}</span>`;
+    tc.appendChild(t);
+    setTimeout(() => { t.classList.add('hide'); setTimeout(() => t.remove(), 350); }, dur);
+  }
+
+  /* ══════════════════════════════════════════════════════════
+     CONFIRM DIALOG
+  ══════════════════════════════════════════════════════════ */
+  function showConfirm(title, msg, cb, okLabel = '🗑 Delete') {
+    document.getElementById('confirmTitle').textContent  = title;
+    document.getElementById('confirmMsg').textContent    = msg;
+    document.getElementById('confirmOkBtn').textContent  = okLabel;
+    document.getElementById('confirmOkBtn').onclick      = () => { closeConfirm(); cb(); };
+    document.getElementById('confirmOverlay').classList.add('open');
+  }
+  function closeConfirm() { document.getElementById('confirmOverlay').classList.remove('open'); }
+
+  /* ══════════════════════════════════════════════════════════
+     ADMIN LOGIN / SESSION
+  ══════════════════════════════════════════════════════════ */
+  function getAdminCreds() { return LS.get('adminCredentials', ADMIN_DEFAULTS); }
+
+  function openAdminLogin() {
+    if (LS.get('isAdminLoggedIn', false)) { openAdminDashboard(); return; }
+    document.getElementById('adminLoginModal').classList.add('open');
+    setTimeout(() => document.getElementById('adminIdInput').focus(), 200);
+  }
+  function closeAdminLogin() {
+    document.getElementById('adminLoginModal').classList.remove('open');
+    document.getElementById('loginError').classList.remove('show');
+    document.getElementById('adminIdInput').value  = '';
+    document.getElementById('adminPassInput').value = '';
+  }
+  async function doAdminLogin() {
+    const id   = document.getElementById('adminIdInput').value.trim();
+    const pass = document.getElementById('adminPassInput').value;
+    
+    const btn = document.querySelector('.btn-admin-login');
+    const origBtnText = btn ? btn.innerHTML : '';
+    if (btn) { btn.innerHTML = '⏳ Authenticating...'; btn.disabled = true; }
+
+    try {
+      if (typeof window.doAdminLoginBackend === 'function') {
+        const res = await window.doAdminLoginBackend(id, pass);
+        if (btn) { btn.innerHTML = origBtnText; btn.disabled = false; }
+        
+        if (res.success) {
+          LS.set('isAdminLoggedIn', true);
+          closeAdminLogin();
+          openAdminDashboard();
+          showToast('Welcome back, tanuj! 🎉');
+          return;
+        } else {
+          const errEl = document.getElementById('loginError');
+          if (errEl) { 
+            errEl.textContent = res.message || 'Invalid credentials.'; 
+            errEl.classList.add('show'); 
+          }
+          else showToast(res.message || 'Invalid credentials.', 'error');
+          document.getElementById('adminPassInput').value = '';
+          document.getElementById('adminPassInput').focus();
+          return;
+        }
+      }
+    } catch (e) {
+      console.error('Backend login error:', e);
+    }
+    
+    if (btn) { btn.innerHTML = origBtnText; btn.disabled = false; }
+
+    const creds = getAdminCreds();
+    if (id === creds.id && pass === creds.password) {
+      LS.set('isAdminLoggedIn', true);
+      closeAdminLogin();
+      openAdminDashboard();
+      showToast('Welcome back, tanuj! 🎉');
+    } else {
+      document.getElementById('loginError').classList.add('show');
+      document.getElementById('adminPassInput').value = '';
+      document.getElementById('adminPassInput').focus();
+    }
+  }
+  function adminLogout() {
+    showConfirm('Logout?', 'You will be signed out of the admin panel.', async () => {
+      if (typeof window.adminLogoutBackend === 'function') {
+        await window.adminLogoutBackend();
+      }
+      LS.del('isAdminLoggedIn');
+      closeAdminDashboard();
+      showToast('Logged out successfully.', 'info');
+    }, '⏏ Logout');
+  }
+  function openAdminDashboard() {
+    document.getElementById('adminDashboard').classList.add('open');
+    document.body.style.overflow = 'hidden';
+    refreshAllAdminData();
+  }
+  function closeAdminDashboard() {
+    document.getElementById('adminDashboard').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  /* ══════════════════════════════════════════════════════════
+     TAB SWITCHER
+  ══════════════════════════════════════════════════════════ */
+  function switchTab(tab, el) {
+    document.querySelectorAll('.admin-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
+    const panel = document.getElementById('tab-' + tab);
+    if (panel) panel.classList.add('active');
+    if (el) el.classList.add('active');
+    // Tab-specific data loading
+    const loaders = {
+      dashboard: loadDashboard,
+      identity:  loadIdentityFields,
+      logo:      loadLogoTab,
+      hero:      loadHeroFields,
+      banner:    loadBannerField,
+      about:     loadAboutFields,
+      services:  renderAdminServices,
+      products:  renderAdminProducts,
+      gallery:   renderGallery,
+      appointments: loadAppointments,
+      contact:   loadContactFields,
+      map:       loadMapFields,
+      settings:  loadSettingsTab
+    };
+    if (loaders[tab]) loaders[tab]();
+  }
+
+  /* ══════════════════════════════════════════════════════════
+     REFRESH ALL
+  ══════════════════════════════════════════════════════════ */
+  function refreshAllAdminData() {
+    loadDashboard();
+    loadIdentityFields();
+    loadLogoTab();
+    loadHeroFields();
+    loadBannerField();
+    loadAboutFields();
+    loadContactFields();
+    loadMapFields();
+    updateApptBadge();
+    updateShopStatus();
+  }
+
+  /* ══════════════════════════════════════════════════════════
+     ① SITE THEME — DARK / LIGHT MODE
+  ══════════════════════════════════════════════════════════ */
+  function applyTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    LS.set('siteTheme', theme);
+    const btn = document.getElementById('themeToggleBtn');
+    const chk = document.getElementById('darkModeToggle');
+    if (btn) btn.textContent = theme === 'dark' ? '☀️' : '🌙';
+    if (chk) chk.checked = (theme === 'dark');
+  }
+  function toggleSiteTheme() {
+    const current = document.documentElement.getAttribute('data-theme') || 'light';
+    applyTheme(current === 'dark' ? 'light' : 'dark');
+    showToast((current === 'dark' ? 'Light' : 'Dark') + ' mode activated!', 'info');
+  }
+
+  /* ══════════════════════════════════════════════════════════
+     ② SHOP IDENTITY — Name, Tagline, Tab Title
+  ══════════════════════════════════════════════════════════ */
+  function loadIdentityFields() {
+    const si = LS.get('shopIdentity', {});
+    document.getElementById('si-name').value     = si.name     || 'Narayan Optical';
+    document.getElementById('si-tagline').value  = si.tagline  || '& Optometry Clinic';
+    document.getElementById('si-tabTitle').value = si.tabTitle || 'Narayan Optical & Optometry Clinic';
+    livePreviewIdentity();
+  }
+  function livePreviewIdentity() {
+    document.getElementById('prevShopName').textContent = document.getElementById('si-name').value || 'Shop Name';
+    document.getElementById('prevTagline').textContent  = document.getElementById('si-tagline').value || 'Tagline';
+    document.getElementById('prevTabTitle').textContent = document.getElementById('si-tabTitle').value || 'Tab Title';
+    // Update logo preview
+    const logoSrc = LS.get('siteLogo', '');
+    const prevLogo = document.getElementById('prevLogoSmall');
+    if (logoSrc && prevLogo) prevLogo.innerHTML = `<img src="${logoSrc}" style="width:100%;height:100%;object-fit:cover;border-radius:8px;" />`;
+  }
+  function saveIdentity() {
+    const si = {
+      name:     document.getElementById('si-name').value.trim()     || 'Narayan Optical',
+      tagline:  document.getElementById('si-tagline').value.trim()  || '& Optometry Clinic',
+      tabTitle: document.getElementById('si-tabTitle').value.trim() || 'Narayan Optical & Optometry Clinic'
+    };
+    LS.set('shopIdentity', si);
+    applyIdentityToPage(si);
+    showToast('Shop identity updated! ✨');
+  }
+  function applyIdentityToPage(si) {
+    if (!si) return;
+    if (si.name) {
+      document.querySelectorAll('#navShopName, #footerShopName').forEach(el => el ? el.textContent = si.name : null);
+    }
+    if (si.tagline) {
+      document.querySelectorAll('#navShopTagline, #footerTagline').forEach(el => el ? el.textContent = si.tagline : null);
+    }
+    if (si.tabTitle) {
+      document.title = si.tabTitle;
+      const titleEl = document.getElementById('siteTabTitle');
+      if (titleEl) titleEl.textContent = si.tabTitle;
+    }
+  }
+
+  /* ══════════════════════════════════════════════════════════
+     ③ LOGO MANAGEMENT
+  ══════════════════════════════════════════════════════════ */
+  let _pendingLogoB64 = '';
+
+  function handleLogoUpload(input) {
+    const file = input.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+      _pendingLogoB64 = e.target.result;
+      // Update preview
+      const prevEl  = document.getElementById('logoPreviewImg');
+      const prevEm  = document.getElementById('logoPreviewEmoji');
+      const prevBig = document.getElementById('logoPreviewLg');
+      if (prevEl) { prevEl.src = _pendingLogoB64; prevEl.style.display = 'block'; }
+      if (prevEm) prevEm.style.display = 'none';
+      updateNavbarLogoPreviewEl(_pendingLogoB64);
+      showToast('Image loaded! Click "Apply Logo" to save.', 'info');
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function applyLogoFromPreview() {
+    if (!_pendingLogoB64) { showToast('No image selected yet.', 'warn'); return; }
+    LS.set('siteLogo', _pendingLogoB64);
+    applyLogoToPage(_pendingLogoB64);
+    document.getElementById('logoStatusText').textContent = 'Custom logo (uploaded)';
+    showToast('Logo applied successfully! 🖼️');
+  }
+
+  function removeLogo() {
+    showConfirm('Remove Logo?', 'The site will revert to the default eye emoji icon.', () => {
+      LS.del('siteLogo');
+      _pendingLogoB64 = '';
+      applyLogoToPage('');
+      // Reset previews
+      const prevEl = document.getElementById('logoPreviewImg');
+      const prevEm = document.getElementById('logoPreviewEmoji');
+      if (prevEl) { prevEl.src = ''; prevEl.style.display = 'none'; }
+      if (prevEm) prevEm.style.display = '';
+      document.getElementById('logoStatusText').textContent = 'Default emoji (👁️)';
+      showToast('Logo removed. Default emoji restored.', 'info');
+    }, '🗑 Remove');
+  }
+
+  function applyLogoToPage(src) {
+    const emojiEl = document.getElementById('navLogoEmoji');
+    const imgEl   = document.getElementById('navLogoImg');
+    if (src) {
+      if (emojiEl) emojiEl.style.display = 'none';
+      if (imgEl)   { imgEl.src = src; imgEl.style.display = 'block'; }
+    } else {
+      if (emojiEl) emojiEl.style.display = '';
+      if (imgEl)   imgEl.style.display = 'none';
+    }
+    // Update admin login icon
+    const loginIcon = document.getElementById('loginLogoIcon');
+    if (loginIcon) loginIcon.innerHTML = src ? `<img src="${src}" style="width:100%;height:100%;object-fit:cover;border-radius:14px;" />` : '🔐';
+    // Update admin top logo
+    const topLogo = document.getElementById('adminTopLogoEl');
+    if (topLogo) topLogo.innerHTML = src ? `<img src="${src}" style="width:100%;height:100%;object-fit:cover;border-radius:9px;" />` : '👁️';
+    // Update logo preview in logo tab
+    updateNavbarLogoPreviewEl(src);
+  }
+
+  function updateNavbarLogoPreviewEl(src) {
+    const navPrev    = document.getElementById('navbarLogoPreviewEl');
+    const loginPrev  = document.getElementById('loginLogoPreviewEl');
+    const prevSmall  = document.getElementById('prevLogoSmall');
+    if (navPrev)   navPrev.innerHTML   = src ? `<img src="${src}" style="width:100%;height:100%;object-fit:cover;border-radius:9px;" />` : '<span>👁️</span>';
+    if (loginPrev) loginPrev.innerHTML = src ? `<img src="${src}" style="width:100%;height:100%;object-fit:cover;border-radius:14px;" />` : '<span>🔐</span>';
+    if (prevSmall)  {
+      const ei = document.getElementById('prevLogoEmoji');
+      if (src) { prevSmall.innerHTML = `<img src="${src}" style="width:100%;height:100%;object-fit:cover;border-radius:8px;" />`; }
+      else     { prevSmall.innerHTML = '<span id="prevLogoEmoji">👁️</span>'; }
+    }
+  }
+
+  function loadLogoTab() {
+    const src = LS.get('siteLogo', '');
+    const prevEl = document.getElementById('logoPreviewImg');
+    const prevEm = document.getElementById('logoPreviewEmoji');
+    const statusEl = document.getElementById('logoStatusText');
+    if (src) {
+      if (prevEl) { prevEl.src = src; prevEl.style.display = 'block'; }
+      if (prevEm) prevEm.style.display = 'none';
+      if (statusEl) statusEl.textContent = 'Custom logo (stored)';
+      _pendingLogoB64 = src;
+    } else {
+      if (prevEl) { prevEl.src = ''; prevEl.style.display = 'none'; }
+      if (prevEm) prevEm.style.display = '';
+      if (statusEl) statusEl.textContent = 'Default emoji (👁️)';
+    }
+    updateNavbarLogoPreviewEl(src);
+  }
+
+  /* ══════════════════════════════════════════════════════════
+     ④ HERO SECTION
+  ══════════════════════════════════════════════════════════ */
+  function loadHeroFields() {
+    const h = LS.get('heroContent', {});
+    document.getElementById('ah-line1').value    = h.line1    || 'Clear Vision,';
+    document.getElementById('ah-line2').value    = h.line2    || 'Better Life.';
+    document.getElementById('ah-subtitle').value = h.subtitle || 'Narayan Optical & Optometry Clinic';
+    document.getElementById('ah-desc').value     = h.desc     || '';
+    livePreviewHero();
+  }
+  function livePreviewHero() {
+    document.getElementById('prevHeroLine1').textContent    = document.getElementById('ah-line1').value    || '';
+    document.getElementById('prevHeroLine2').textContent    = document.getElementById('ah-line2').value    || '';
+    document.getElementById('prevHeroSubtitle').textContent = document.getElementById('ah-subtitle').value || '';
+    document.getElementById('prevHeroDesc').textContent     = document.getElementById('ah-desc').value     || '';
+  }
+  function saveHero() {
+    const h = {
+      line1:    document.getElementById('ah-line1').value.trim(),
+      line2:    document.getElementById('ah-line2').value.trim(),
+      subtitle: document.getElementById('ah-subtitle').value.trim(),
+      desc:     document.getElementById('ah-desc').value.trim()
+    };
+    LS.set('heroContent', h);
+    applyHeroToPage(h);
+    showToast('Hero section updated! 🏠');
+  }
+  function applyHeroToPage(h) {
+    if (!h) return;
+    const titleEl = document.getElementById('heroTitle');
+    if (titleEl && (h.line1 || h.line2)) {
+      titleEl.innerHTML = `${h.line1 || ''}<br/><em>${h.line2 || ''}</em>`;
+    }
+    const subtitleEl = document.getElementById('heroSubtitle');
+    if (subtitleEl && h.subtitle) subtitleEl.textContent = h.subtitle;
+    const descEl = document.getElementById('heroDesc');
+    if (descEl && h.desc) descEl.textContent = h.desc;
+  }
+
+  /* ══════════════════════════════════════════════════════════
+     ⑤ OFFER BANNER
+  ══════════════════════════════════════════════════════════ */
+  function loadBannerField() {
+    const saved = LS.get('offerBanner', '');
+    const el    = document.getElementById('ab-text');
+    if (el) el.value = saved || document.getElementById('offerBanner').innerHTML.trim();
+    updateBannerPreview();
+  }
+  function updateBannerPreview() {
+    const v = document.getElementById('ab-text');
+    const p = document.getElementById('bannerPreview');
+    if (v && p) p.innerHTML = v.value;
+  }
+  function saveBanner() {
+    const text = document.getElementById('ab-text').value;
+    LS.set('offerBanner', text);
+    document.getElementById('offerBanner').innerHTML = text;
+    showToast('Offer banner updated! 📣');
+  }
+  document.getElementById('ab-text').addEventListener('input', updateBannerPreview);
+
+  /* ══════════════════════════════════════════════════════════
+     ⑥ ABOUT SECTION
+  ══════════════════════════════════════════════════════════ */
+  function loadAboutFields() {
+    const ab = LS.get('aboutContent', {});
+    document.getElementById('abt-title').value = ab.title || 'Where Science Meets Caring Vision';
+    document.getElementById('abt-desc').value  = ab.desc  || document.getElementById('aboutDesc').textContent;
+    livePreviewAbout();
+  }
+  function livePreviewAbout() {
+    const titleRaw = document.getElementById('abt-title').value;
+    const desc     = document.getElementById('abt-desc').value;
+    // Render | | as italic section
+    const titleHtml = titleRaw.replace(/\|([^|]+)\|/g, '<em style="color:var(--gold);">$1</em>');
+    document.getElementById('prevAboutTitle').innerHTML = titleHtml || 'About title...';
+    document.getElementById('prevAboutDesc').textContent = desc || 'Description...';
+  }
+  function saveAbout() {
+    const ab = {
+      title: document.getElementById('abt-title').value.trim(),
+      desc:  document.getElementById('abt-desc').value.trim()
+    };
+    LS.set('aboutContent', ab);
+    applyAboutToPage(ab);
+    showToast('About section updated! 📖');
+  }
+  function applyAboutToPage(ab) {
+    if (!ab) return;
+    if (ab.title) {
+      const titleHtml = ab.title.replace(/\|([^|]+)\|/g, '<em>$1</em>');
+      const el = document.getElementById('aboutTitle');
+      if (el) el.innerHTML = titleHtml;
+    }
+    if (ab.desc) {
+      const el = document.getElementById('aboutDesc');
+      if (el) el.textContent = ab.desc;
+    }
+  }
+
+  /* ══════════════════════════════════════════════════════════
+     ⑦ SERVICES
+  ══════════════════════════════════════════════════════════ */
+  const getServices = ()    => LS.get('services', DEFAULT_SERVICES);
+  const setServices = (arr) => LS.set('services', arr);
+
+  function renderServicesOnSite() {
+    const svcs = getServices();
+    const grid  = document.getElementById('servicesGrid');
+    if (!grid) return;
+    grid.innerHTML = svcs.map(s => `
+      <div class="service-card fade-in">
+        <div class="service-icon">${s.icon}</div>
+        <h3>${s.name}</h3>
+        <p>${s.desc}</p>
+      </div>`).join('');
+    grid.querySelectorAll('.fade-in').forEach(el => fadeObserver.observe(el));
+  }
+
+  function renderAdminServices() {
+    const svcs = getServices();
+    const el   = document.getElementById('servicesList');
+    if (!el) return;
+    if (!svcs.length) { el.innerHTML = '<p style="color:var(--admin-muted);text-align:center;padding:24px;">No services yet.</p>'; return; }
+    el.innerHTML = svcs.map(s => `
+      <div class="service-admin-item">
+        <div class="sai-icon-wrap">${s.icon}</div>
+        <div class="sai-info"><h4>${s.name}</h4><p>${s.desc}</p></div>
+        <div class="sai-actions">
+          <button class="abt-edit" onclick="openEditService(${s.id})">✏️</button>
+          <button class="abt-danger" onclick="deleteService(${s.id})">🗑</button>
+        </div>
+      </div>`).join('');
+  }
+
+  function addService() {
+    const name = document.getElementById('svc-name').value.trim();
+    const icon = document.getElementById('svc-icon').value.trim() || '⚕️';
+    const desc = document.getElementById('svc-desc').value.trim();
+    if (!name) { showToast('Please enter a service name.', 'error'); return; }
+    const svcs = getServices();
+    svcs.push({ id: Date.now(), icon, name, desc });
+    setServices(svcs);
+    renderServicesOnSite();
+    renderAdminServices();
+    document.getElementById('svc-name').value = '';
+    document.getElementById('svc-icon').value = '';
+    document.getElementById('svc-desc').value = '';
+    showToast('Service added! ✅');
+  }
+
+  function deleteService(id) {
+    showConfirm('Delete Service?', 'This service will be removed from the website.', () => {
+      setServices(getServices().filter(s => s.id !== id));
+      renderServicesOnSite(); renderAdminServices();
+      showToast('Service deleted.', 'info');
+    });
+  }
+
+  function openEditService(id) {
+    const s = getServices().find(x => x.id === id); if (!s) return;
+    document.getElementById('es-id').value   = id;
+    document.getElementById('es-name').value = s.name;
+    document.getElementById('es-icon').value = s.icon;
+    document.getElementById('es-desc').value = s.desc;
+    document.getElementById('editServiceModal').classList.add('open');
+  }
+  function closeEditService() { document.getElementById('editServiceModal').classList.remove('open'); }
+  function saveEditService() {
+    const id   = parseInt(document.getElementById('es-id').value);
+    const name = document.getElementById('es-name').value.trim();
+    const icon = document.getElementById('es-icon').value.trim();
+    const desc = document.getElementById('es-desc').value.trim();
+    if (!name) { showToast('Name required.', 'error'); return; }
+    setServices(getServices().map(s => s.id === id ? { ...s, name, icon, desc } : s));
+    renderServicesOnSite(); renderAdminServices();
+    closeEditService();
+    showToast('Service updated! ✅');
+  }
+
+  /* ══════════════════════════════════════════════════════════
+     ⑧ PRODUCTS
+  ══════════════════════════════════════════════════════════ */
+  const getProducts = ()    => LS.get('products', DEFAULT_PRODUCTS);
+  const setProducts = (arr) => LS.set('products', arr);
+  let _newProductImgB64  = '';
+  let _editProductImgB64 = '';
+
+  function handleProductImg(input) {
+    const file = input.files[0]; if (!file) return;
+    const r = new FileReader();
+    r.onload = e => {
+      _newProductImgB64 = e.target.result;
+      document.getElementById('prodImgPreview').innerHTML = `<img src="${e.target.result}" alt="preview" />`;
+    };
+    r.readAsDataURL(file);
+  }
+  function handleEditProductImg(input) {
+    const file = input.files[0]; if (!file) return;
+    const r = new FileReader();
+    r.onload = e => {
+      _editProductImgB64 = e.target.result;
+      document.getElementById('editProdImgPreview').innerHTML = `<img src="${e.target.result}" alt="preview" />`;
+    };
+    r.readAsDataURL(file);
+  }
+
+  /* Helper: build the price/buy section for a product card */
+  function buildProductPriceCta(p) {
+    if (!p.price) return '<span class="product-cta">Enquire Now \u2192</span>';
+    var safeName = String(p.name).replace(/['"]/g, '');
+    var safeId   = String(p.id || p.name).replace(/['"]/g, '');
+    var priceHtml  = '<div style="font-family:\'Playfair Display\',serif;font-size:1.2rem;font-weight:700;color:var(--gold-dark);">\u20b9' + p.price + '</div>';
+    var buyBtn     = '<button onclick="showBuyNowModal(\'' + safeId + '\',\'' + safeName + '\',' + p.price + ')" ' +
+                     'style="display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,var(--green-dark),var(--green-mid));' +
+                     'color:#fff;padding:9px 18px;border-radius:50px;font-family:\'DM Sans\',sans-serif;font-size:0.83rem;' +
+                     'font-weight:600;border:none;cursor:pointer;">' +
+                     '\ud83d\udcb3 Buy Now</button>';
+    return priceHtml + buyBtn;
+  }
+
+  function renderProductsOnSite() {
+    const prods = getProducts();
+    const grid  = document.getElementById('productsGrid');
+    if (!grid) return;
+    grid.innerHTML = prods.map(function(p) {
+      var thumbStyle = p.img ? '' : ('background:' + (p.bg || 'linear-gradient(135deg,#1b4332,#2d6a4f)'));
+      var thumbInner = p.img
+        ? '<img src="' + p.img + '" alt="' + p.name + '" />'
+        : '<span class="thumb-emoji">' + (p.emoji || '\ud83d\udd76\ufe0f') + '</span>';
+      return '<div class="product-card fade-in">' +
+        '<div class="product-thumb" style="' + thumbStyle + '">' +
+          thumbInner +
+          '<span class="product-tag">' + (p.tag || 'Product') + '</span>' +
+        '</div>' +
+        '<div class="product-info">' +
+          '<h3>' + p.name + '</h3>' +
+          '<p>' + p.desc + '</p>' +
+          '<div style="display:flex;align-items:center;justify-content:space-between;margin-top:14px;gap:10px;flex-wrap:wrap;">' +
+            buildProductPriceCta(p) +
+          '</div>' +
+        '</div>' +
+      '</div>';
+    }).join('');
+    grid.querySelectorAll('.fade-in').forEach(function(el) { fadeObserver.observe(el); });
+  }
+
+  function renderAdminProducts() {
+    const prods = getProducts();
+    const grid  = document.getElementById('adminProductGrid');
+    if (!grid) return;
+    if (!prods.length) { grid.innerHTML = '<p style="color:var(--admin-muted);padding:20px;text-align:center;">No products yet.</p>'; return; }
+    grid.innerHTML = prods.map(p => `
+      <div class="admin-product-item">
+        <div class="api-thumb" style="${p.img ? '' : 'background:' + (p.bg || 'linear-gradient(135deg,#1b4332,#2d6a4f)')}">
+          ${p.img ? `<img src="${p.img}" alt="${p.name}" />` : `<span class="api-emoji">${p.emoji || '🕶️'}</span>`}
+        </div>
+        <div class="api-info"><h4>${p.name}</h4><div class="api-tag">${p.tag}</div></div>
+        <div class="api-actions">
+          <button class="abt-edit" onclick="openEditProduct(${p.id})">✏️</button>
+          <button class="abt-danger" onclick="deleteProduct(${p.id})">🗑</button>
+        </div>
+      </div>`).join('');
+  }
+
+  function addProduct() {
+    const name    = document.getElementById('prod-name').value.trim();
+    const tag     = document.getElementById('prod-tag').value.trim()    || 'New';
+    const desc    = document.getElementById('prod-desc').value.trim();
+    const price   = parseFloat(document.getElementById('prod-price').value) || 0;
+    const emoji   = document.getElementById('prod-emoji').value.trim()  || '🕶️';
+    const bg      = document.getElementById('prod-bg').value.trim()     || 'linear-gradient(135deg,#1b4332,#2d6a4f)';
+    if (!name) { showToast('Please enter a product name.', 'error'); return; }
+    const prods = getProducts();
+    prods.push({ id: Date.now(), name, tag, price, desc, emoji, bg, img: _newProductImgB64 });
+    setProducts(prods);
+    renderProductsOnSite(); renderAdminProducts();
+    ['prod-name','prod-tag','prod-price','prod-desc','prod-emoji','prod-bg'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('prodImgPreview').innerHTML = '<span class="preview-icon">🖼️</span><span>Click to upload image</span>';
+    _newProductImgB64 = '';
+    showToast('Product added! 📦');
+  }
+
+  function deleteProduct(id) {
+    showConfirm('Delete Product?', 'This product will be removed from the website.', () => {
+      setProducts(getProducts().filter(p => p.id !== id));
+      renderProductsOnSite(); renderAdminProducts();
+      showToast('Product deleted.', 'info');
+    });
+  }
+
+  function openEditProduct(id) {
+    const p = getProducts().find(x => x.id === id); if (!p) return;
+    _editProductImgB64 = p.img || '';
+    document.getElementById('ep-id').value    = id;
+    document.getElementById('ep-name').value  = p.name;
+    document.getElementById('ep-tag').value   = p.tag;
+    document.getElementById('ep-desc').value  = p.desc;
+    document.getElementById('ep-emoji').value = p.emoji;
+    document.getElementById('ep-bg').value    = p.bg;
+    document.getElementById('editProdImgPreview').innerHTML = p.img
+      ? `<img src="${p.img}" alt="preview" />`
+      : '<span class="preview-icon">🖼️</span><span>Click to change</span>';
+    document.getElementById('editProductModal').classList.add('open');
+  }
+  function closeEditProduct() { document.getElementById('editProductModal').classList.remove('open'); }
+  function saveEditProduct() {
+    const id    = parseInt(document.getElementById('ep-id').value);
+    const name  = document.getElementById('ep-name').value.trim();
+    const tag   = document.getElementById('ep-tag').value.trim();
+    const desc  = document.getElementById('ep-desc').value.trim();
+    const emoji = document.getElementById('ep-emoji').value.trim();
+    const bg    = document.getElementById('ep-bg').value.trim();
+    if (!name) { showToast('Name required.', 'error'); return; }
+    setProducts(getProducts().map(p => p.id === id ? { ...p, name, tag, desc, emoji, bg, img: _editProductImgB64 || p.img } : p));
+    renderProductsOnSite(); renderAdminProducts();
+    closeEditProduct();
+    showToast('Product updated! ✅');
+  }
+
+  /* ══════════════════════════════════════════════════════════
+     ⑨ GALLERY
+  ══════════════════════════════════════════════════════════ */
+  const getGallery = ()    => LS.get('siteGallery', []);
+  const setGallery = (arr) => LS.set('siteGallery', arr);
+
+  function handleGalleryUpload(input) {
+    const files = Array.from(input.files);
+    if (!files.length) return;
+    let loaded = 0;
+    const gallery = getGallery();
+    files.forEach(file => {
+      const r = new FileReader();
+      r.onload = e => {
+        gallery.push({ id: Date.now() + loaded, src: e.target.result, name: file.name });
+        loaded++;
+        if (loaded === files.length) {
+          setGallery(gallery);
+          renderGallery();
+          showToast(`${files.length} image(s) uploaded! 📸`);
+        }
+      };
+      r.readAsDataURL(file);
+    });
+    input.value = '';
+  }
+
+  function renderGallery() {
+    const gallery = getGallery();
+    const grid    = document.getElementById('galleryGrid');
+    const empty   = document.getElementById('galleryEmpty');
+    const count   = document.getElementById('galleryCount');
+    if (!grid) return;
+    if (count) count.textContent = gallery.length;
+    if (!gallery.length) {
+      grid.innerHTML = '';
+      if (empty) empty.style.display = '';
+      return;
+    }
+    if (empty) empty.style.display = 'none';
+    grid.innerHTML = gallery.map(img => `
+      <div class="gallery-item">
+        <img src="${img.src}" alt="${img.name}" loading="lazy" />
+        <button class="gallery-del" onclick="deleteGalleryImg(${img.id})" title="Delete">✕</button>
+      </div>`).join('');
+  }
+
+  function deleteGalleryImg(id) {
+    showConfirm('Delete Image?', 'This gallery image will be permanently removed.', () => {
+      setGallery(getGallery().filter(g => g.id !== id));
+      renderGallery();
+      showToast('Image deleted.', 'info');
+    });
+  }
+
+  /* ══════════════════════════════════════════════════════════
+     ⑩ APPOINTMENTS
+  ══════════════════════════════════════════════════════════ */
+  function loadAppointments() {
+    const appts = LS.get('narayan_optical_bookings', []);
+    const tbody = document.getElementById('allApptBody');
+    const total = document.getElementById('totalApptCount');
+    if (total) total.textContent = appts.length;
+    if (!tbody) return;
+    if (!appts.length) {
+      tbody.innerHTML = `<tr><td colspan="8" class="td-empty">No appointments yet. Bookings appear here when customers use the booking form.</td></tr>`;
+      return;
+    }
+    tbody.innerHTML = appts.map((a, i) => `
+      <tr>
+        <td style="color:var(--admin-muted);">${i + 1}</td>
+        <td><strong style="color:var(--admin-text);">${a.name}</strong></td>
+        <td>${a.phone}</td>
+        <td>${a.date}</td>
+        <td><span class="td-badge">${a.service || '—'}</span></td>
+        <td style="color:var(--admin-muted);max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${a.note || '—'}</td>
+        <td style="color:var(--admin-muted);font-size:0.78rem;">${a.bookedAt}</td>
+        <td><button class="abt-danger" onclick="deleteAppt(${a.id})">🗑</button></td>
+      </tr>`).join('');
+  }
+
+  function updateApptBadge() {
+    const count = LS.get('narayan_optical_bookings', []).length;
+    const badge = document.getElementById('apptBadge');
+    if (badge) badge.textContent = count;
+  }
+
+  function deleteAppt(id) {
+    showConfirm('Delete Appointment?', 'This booking record will be permanently removed.', () => {
+      LS.set('narayan_optical_bookings', LS.get('narayan_optical_bookings', []).filter(a => a.id !== id));
+      loadAppointments(); updateApptBadge();
+      showToast('Appointment removed.', 'info');
+    });
+  }
+
+  function confirmClearAllAppts() {
+    showConfirm('Clear ALL Appointments?', 'All booking records will be permanently deleted. Cannot be undone.', () => {
+      LS.set('narayan_optical_bookings', []);
+      loadAppointments(); updateApptBadge();
+      showToast('All appointments cleared.', 'info');
+    }, '🗑 Clear All');
+  }
+
+  /* ══════════════════════════════════════════════════════════
+     ⑪ CONTACT INFO
+  ══════════════════════════════════════════════════════════ */
+  function loadContactFields() {
+    const ci = LS.get('contactInfo', {});
+    document.getElementById('ci-phone').value   = ci.phone   || '';
+    document.getElementById('ci-wa').value      = ci.wa      || '';
+    document.getElementById('ci-email').value   = ci.email   || '';
+    document.getElementById('ci-address').value = ci.address || '';
+    loadShopHoursFields();
+  }
+
+  function saveContactInfo() {
+    const phone = document.getElementById('ci-phone').value.trim();
+    const wa    = document.getElementById('ci-wa').value.trim();
+    const email = document.getElementById('ci-email').value.trim();
+    const ci    = LS.get('contactInfo', {});
+    const updated = { ...ci, phone, wa, email };
+    LS.set('contactInfo', updated);
+    applyContactToPage(updated);
+    showToast('Contact info updated! 📞');
+  }
+
+  function saveAddress() {
+    const address = document.getElementById('ci-address').value.trim();
+    const ci      = LS.get('contactInfo', {});
+    const updated = { ...ci, address };
+    LS.set('contactInfo', updated);
+    applyContactToPage(updated);
+    showToast('Address updated! 📍');
+  }
+
+  function applyContactToPage(ci) {
+    if (!ci) return;
+    if (ci.phone) {
+      const cleaned = ci.phone.replace(/\s|-/g, '');
+      const phoneEl = document.getElementById('contactPhone');
+      const linkEl  = document.getElementById('contactPhoneLink');
+      const callBtn = document.getElementById('callNowBtn');
+      if (phoneEl) phoneEl.textContent = ci.phone;
+      if (linkEl)  linkEl.href = 'tel:' + cleaned;
+      if (callBtn) callBtn.href = 'tel:' + cleaned;
+    }
+    if (ci.email) {
+      const emailEl   = document.getElementById('contactEmail');
+      const emailLink = document.getElementById('contactEmailLink');
+      if (emailEl)   emailEl.textContent = ci.email;
+      if (emailLink) emailLink.href = 'mailto:' + ci.email;
+    }
+    if (ci.wa) {
+      const waNum  = ci.wa.replace(/\D/g, '');
+      const waUrl  = `https://wa.me/${waNum}?text=Hello%2C%20I%20want%20to%20book%20an%20appointment%20at%20Narayan%20Optical.`;
+      const waEl   = document.getElementById('contactWa');
+      const waLink = document.getElementById('contactWaLink');
+      const waBtn  = document.getElementById('waBtn');
+      const floatWa = document.getElementById('floatWaBtn');
+      if (waEl)   waEl.textContent   = '+' + waNum;
+      if (waLink) waLink.href        = waUrl;
+      if (waBtn)  waBtn.href         = waUrl;
+      if (floatWa) floatWa.href      = waUrl;
+    }
+    if (ci.address) {
+      const addrEl = document.getElementById('contactAddress');
+      if (addrEl) addrEl.innerHTML = ci.address.replace(/\n/g, '<br/>');
+    }
+  }
+
+  /* ══════════════════════════════════════════════════════════
+     ⑫-A SHOP HOURS & STATUS
+  ══════════════════════════════════════════════════════════ */
+  function loadShopHoursFields() {
+    var sh = LS.get("shopHours", { open: "09:00", close: "20:30" });
+    var oEl = document.getElementById("sh-open");
+    var cEl = document.getElementById("sh-close");
+    if (oEl) oEl.value = sh.open;
+    if (cEl) cEl.value = sh.close;
+  }
+
+  function saveShopHours() {
+    var open  = document.getElementById("sh-open").value;
+    var close = document.getElementById("sh-close").value;
+    if (!open || !close) { showToast("Please set both opening and closing times.", "error"); return; }
+    LS.set("shopHours", { open: open, close: close });
+    updateShopStatus();
+    showToast("Shop hours saved! 🕐");
+  }
+
+  function updateShopStatus() {
+    var badge   = document.getElementById("shopStatusBadge");
+    var textEl  = document.getElementById("shopStatusText");
+    if (!badge || !textEl) return;
+    var sh = LS.get("shopHours", { open: "09:00", close: "20:30" });
+    var now   = new Date();
+    var hh    = now.getHours();
+    var mm    = now.getMinutes();
+    var cur   = hh * 60 + mm;
+    var parts = sh.open.split(":").map(Number);
+    var openM = parts[0] * 60 + parts[1];
+    var parts2 = sh.close.split(":").map(Number);
+    var closeM = parts2[0] * 60 + parts2[1];
+    var isOpen = (openM <= closeM) ? (cur >= openM && cur < closeM) : (cur >= openM || cur < closeM);
+    badge.className = "shop-status-badge " + (isOpen ? "open" : "closed");
+    textEl.textContent = isOpen ? "Open Now" : "Closed Now";
+  }
+
+  /* ══════════════════════════════════════════════════════════
+     ⑫ MAP & LOCATION
+  ══════════════════════════════════════════════════════════ */
+  function loadMapFields() {
+    const saved = LS.get('mapEmbedUrl', '');
+    const input = document.getElementById('map-embed-url');
+    if (input) input.value = saved;
+    const preview     = document.getElementById('adminMapPreview');
+    const noPreview   = document.getElementById('mapNoPreview');
+    if (saved) {
+      if (preview)   { preview.src = saved; preview.style.display = 'block'; }
+      if (noPreview) noPreview.style.display = 'none';
+    } else {
+      if (preview)   preview.style.display = 'none';
+      if (noPreview) noPreview.style.display = '';
+    }
+  }
+
+  function saveMapEmbed() {
+    const url = document.getElementById('map-embed-url').value.trim();
+    if (!url) { showToast('Please paste a Google Maps embed URL.', 'error'); return; }
+    LS.set('mapEmbedUrl', url);
+    applyMapToPage(url);
+    // Update admin preview
+    const preview   = document.getElementById('adminMapPreview');
+    const noPreview = document.getElementById('mapNoPreview');
+    if (preview)   { preview.src = url; preview.style.display = 'block'; }
+    if (noPreview) noPreview.style.display = 'none';
+    showToast('Map location updated! 🗺️');
+  }
+
+  function saveMapCoords() {
+    const lat  = parseFloat(document.getElementById('map-lat').value);
+    const lng  = parseFloat(document.getElementById('map-lng').value);
+    const zoom = parseInt(document.getElementById('map-zoom').value) || 15;
+    if (isNaN(lat) || isNaN(lng)) { showToast('Please enter valid coordinates.', 'error'); return; }
+    const url = `https://maps.google.com/maps?q=${lat},${lng}&z=${zoom}&output=embed`;
+    document.getElementById('map-embed-url').value = url;
+    LS.set('mapEmbedUrl', url);
+    applyMapToPage(url);
+    const preview   = document.getElementById('adminMapPreview');
+    const noPreview = document.getElementById('mapNoPreview');
+    if (preview)   { preview.src = url; preview.style.display = 'block'; }
+    if (noPreview) noPreview.style.display = 'none';
+    showToast(`Map set to ${lat}, ${lng} (zoom ${zoom})! 📍`);
+  }
+
+  function applyMapToPage(url) {
+    const mapFrame = document.getElementById('siteMapFrame');
+    if (mapFrame && url) mapFrame.src = url;
+  }
+
+  /* ══════════════════════════════════════════════════════════
+     ⑬ SETTINGS TAB
+  ══════════════════════════════════════════════════════════ */
+  function loadSettingsTab() {
+    const theme = document.documentElement.getAttribute('data-theme') || 'light';
+    const chk   = document.getElementById('darkModeToggle');
+    if (chk) chk.checked = (theme === 'dark');
+    // Show current credentials ID (not password)
+    const credEl = document.getElementById('currentCredId');
+    if (credEl) credEl.textContent = getAdminCreds().id;
+    // System info
+    const infoEl = document.getElementById('systemInfo');
+    if (infoEl) {
+      const totalKeys = LS.keys().length;
+      let totalSize = 0;
+      LS.keys().forEach(k => { try { totalSize += localStorage.getItem(k).length; } catch {} });
+      const sizeKB = (totalSize / 1024).toFixed(1);
+      infoEl.innerHTML = `
+        <div>📦 LocalStorage keys: <strong style="color:var(--admin-text);">${totalKeys}</strong></div>
+        <div>💾 Estimated storage used: <strong style="color:var(--admin-text);">${sizeKB} KB</strong> / ~5120 KB</div>
+        <div>🌐 Site theme: <strong style="color:var(--admin-text);">${theme === 'dark' ? '🌙 Dark' : '☀️ Light'}</strong></div>
+        <div>📅 Appointments: <strong style="color:var(--admin-text);">${LS.get('narayan_optical_bookings', []).length}</strong></div>
+        <div>🖼 Gallery images: <strong style="color:var(--admin-text);">${getGallery().length}</strong></div>
+      `;
+    }
+  }
+
+  function saveNewCredentials() {
+    const newId    = document.getElementById('new-admin-id').value.trim();
+    const newPass  = document.getElementById('new-admin-pass').value;
+    const confirm  = document.getElementById('new-admin-pass-confirm').value;
+    if (!newId)   { showToast('Please enter a new admin ID.', 'error'); return; }
+    if (!newPass) { showToast('Please enter a new password.', 'error'); return; }
+    if (newPass.length < 4) { showToast('Password must be at least 4 characters.', 'error'); return; }
+    if (newPass !== confirm) { showToast('Passwords do not match.', 'error'); return; }
+    LS.set('adminCredentials', { id: newId, password: newPass });
+    document.getElementById('currentCredId').textContent = newId;
+    document.getElementById('new-admin-id').value    = '';
+    document.getElementById('new-admin-pass').value  = '';
+    document.getElementById('new-admin-pass-confirm').value = '';
+    showToast('Credentials updated! 🔑 Use new ID/password on next login.');
+  }
+
+  function exportAllData() {
+    const data = {};
+    LS.keys().forEach(k => { try { data[k] = LS.get(k, null); } catch {} });
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url  = URL.createObjectURL(blob);
+    const a    = document.createElement('a');
+    a.href = url; a.download = `narayan_optical_backup_${Date.now()}.json`;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    showToast('Data exported as JSON! 📥');
+  }
+
+  function confirmResetAll() {
+    showConfirm(
+      '⚠️ Reset Everything?',
+      'ALL customizations will be wiped: logo, content, products, services, map, contacts, theme, gallery, and appointments. Cannot be undone.',
+      () => {
+        // Keep only admin credentials
+        const creds = LS.get('adminCredentials', null);
+        localStorage.clear();
+        if (creds) LS.set('adminCredentials', creds);
+        // Re-apply defaults
+        applyAllSavedData();
+        applyTheme('light');
+        refreshAllAdminData();
+        showToast('All data reset to defaults. 🔄', 'warn');
+      },
+      '⚠️ Reset Everything'
+    );
+  }
+
+  /* ══════════════════════════════════════════════════════════
+     DASHBOARD
+  ══════════════════════════════════════════════════════════ */
+  function loadDashboard() {
+    const appts = LS.get('narayan_optical_bookings', []);
+    const today = appts.filter(a => a.date === new Date().toISOString().split('T')[0]).length;
+    document.getElementById('dashboardStats').innerHTML = `
+      <div class="stat-card"><div class="s-ico">📅</div><div class="s-val">${appts.length}</div><div class="s-lbl">Total Bookings</div></div>
+      <div class="stat-card"><div class="s-ico">📆</div><div class="s-val">${today}</div><div class="s-lbl">Today's Appts</div></div>
+      <div class="stat-card"><div class="s-ico">👓</div><div class="s-val">${getProducts().length}</div><div class="s-lbl">Products</div></div>
+      <div class="stat-card"><div class="s-ico">⚕️</div><div class="s-val">${getServices().length}</div><div class="s-lbl">Services</div></div>
+      <div class="stat-card"><div class="s-ico">🖼</div><div class="s-val">${getGallery().length}</div><div class="s-lbl">Gallery Images</div></div>
+    `;
+    const tbody = document.getElementById('recentApptBody');
+    const recent = [...appts].reverse().slice(0, 5);
+    tbody.innerHTML = recent.length ? recent.map(a => `
+      <tr>
+        <td><strong style="color:var(--admin-text);">${a.name}</strong></td>
+        <td>${a.phone}</td><td>${a.date}</td>
+        <td><span class="td-badge">${a.service || '—'}</span></td>
+        <td style="color:var(--admin-muted);font-size:0.78rem;">${a.bookedAt}</td>
+      </tr>`).join('')
+    : `<tr><td colspan="5" class="td-empty">No bookings yet.</td></tr>`;
+    updateApptBadge();
+  }
+
+  /* ══════════════════════════════════════════════════════════
+     APPLY ALL SAVED DATA ON PAGE LOAD
+  ══════════════════════════════════════════════════════════ */
+  function applyAllSavedData() {
+    // Theme
+    applyTheme(LS.get('siteTheme', 'light'));
+    // Shop Identity
+    const si = LS.get('shopIdentity', null);
+    if (si) applyIdentityToPage(si);
+    // Logo
+    const logo = LS.get('siteLogo', '');
+    if (logo) applyLogoToPage(logo);
+    // Hero
+    const h = LS.get('heroContent', null);
+    if (h) applyHeroToPage(h);
+    // Banner
+    const b = LS.get('offerBanner', null);
+    if (b) document.getElementById('offerBanner').innerHTML = b;
+    // About
+    const ab = LS.get('aboutContent', null);
+    if (ab) applyAboutToPage(ab);
+    // Contact
+    const ci = LS.get('contactInfo', null);
+    if (ci) applyContactToPage(ci);
+    // Map
+    const mapUrl = LS.get('mapEmbedUrl', null);
+    if (mapUrl) applyMapToPage(mapUrl);
+    // Services & Products
+    renderServicesOnSite();
+    renderProductsOnSite();
+  }
+
+  /* ══════════════════════════════════════════════════════════
+     ORIGINAL SITE JS (preserved & upgraded)
+  ══════════════════════════════════════════════════════════ */
+
+  /* Mobile Menu */
+  function toggleMenu() { document.getElementById('mobileNav').classList.toggle('open'); }
+
+  /* Scroll-Top */
+  const scrollTopBtn = document.getElementById('scrollTop');
+  window.addEventListener('scroll', () => scrollTopBtn.classList.toggle('show', window.scrollY > 400));
+
+  /* Fade-In Observer */
+  const fadeObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) { entry.target.classList.add('visible'); fadeObserver.unobserve(entry.target); }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-in').forEach(el => fadeObserver.observe(el));
+
+  /* Trigger hero immediately on load */
+  window.addEventListener('load', () => {
+    document.querySelectorAll('#home .fade-in').forEach(el => el.classList.add('visible'));
+  });
+
+  /* Booking form min date */
+  const dateInput = document.getElementById('bDate');
+  if (dateInput) dateInput.setAttribute('min', new Date().toISOString().split('T')[0]);
+
+  /* Booking form submit */
+  function submitBooking() {
+    const name  = document.getElementById('bName').value.trim();
+    const phone = document.getElementById('bPhone').value.trim();
+    const date  = document.getElementById('bDate').value;
+    const service = document.getElementById('bService').value;
+    const note  = document.getElementById('bNote').value.trim();
+    if (!name)                       { showToast('Please enter your full name.', 'error'); return; }
+    if (!phone || phone.length < 10) { showToast('Please enter a valid phone number.', 'error'); return; }
+    if (!date)                       { showToast('Please select a preferred date.', 'error'); return; }
+    const booking  = { id: Date.now(), name, phone, date, service, note, bookedAt: new Date().toLocaleString('en-IN') };
+    const existing = LS.get('narayan_optical_bookings', []);
+    existing.push(booking);
+    LS.set('narayan_optical_bookings', existing);
+    updateApptBadge();
+    document.getElementById('bookingForm').style.display = 'none';
+    document.getElementById('formSuccess').style.display = 'block';
+    showToast('Appointment booked successfully! 🎉');
+  }
+  function resetForm() {
+    ['bName','bPhone','bDate','bNote'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('bService').value = '';
+    document.getElementById('bookingForm').style.display = 'block';
+    document.getElementById('formSuccess').style.display = 'none';
+  }
+
+  /* Nav active highlight */
+  const navSections = document.querySelectorAll('section[id]');
+  const navLinkEls  = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    navSections.forEach(s => { if (window.scrollY >= s.offsetTop - 100) current = s.id; });
+    navLinkEls.forEach(l => { l.style.color = l.getAttribute('href') === '#' + current ? 'var(--gold)' : ''; });
+  });
+
+  /* URL hash access */
+  if (window.location.hash === '#admin') openAdminLogin();
+
+  /* ══════════════════════════════════════════════════════════
+     INITIALIZE ON DOM READY
+  ══════════════════════════════════════════════════════════ */
+  applyAllSavedData();
+  updateApptBadge();
+  updateShopStatus();
+  setInterval(updateShopStatus, 60000); /* re-check shop status every 60 seconds */
+
+  </script>
+
+  <!-- ═══════════════════════════════════════════
+       PAYMENT CLIENT (Backend Integration)
+  ═══════════════════════════════════════════ -->
+  <script src="payment-client.js"></script>
+</body>
+</html>
